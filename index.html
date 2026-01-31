@@ -38,30 +38,27 @@
         .l-card button.judge{background:linear-gradient(135deg,var(--pr),var(--pr-l))}
         .l-card button.school{background:linear-gradient(135deg,var(--sec),#a08060)}
         
+        /* حاوية الإعلانات - عرض الأيقونات */
         .announcements-container{max-width:1100px;margin:30px auto;background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
-        .announcements-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--dan)}
-        .announcements-header h2{color:var(--dan);font-size:20px}
-        .upload-btn{padding:10px 20px;background:linear-gradient(135deg,var(--suc),#34ce57);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;display:flex;align-items:center;gap:8px}
+        .announcements-header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--dan)}
+        .announcements-header h2{color:var(--dan);font-size:20px;display:flex;align-items:center;justify-content:center;gap:10px}
         
-        .announcements-list{display:grid;gap:15px;max-height:300px;overflow-y:auto;padding:10px}
-        .announcement-item{display:flex;align-items:center;gap:15px;padding:15px;background:var(--g1);border-radius:12px}
-        .announcement-icon{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
-        .announcement-icon.pdf{background:linear-gradient(135deg,#dc3545,#c82333)}
-        .announcement-icon.word{background:linear-gradient(135deg,#2b579a,#1e3f6f)}
-        .announcement-icon.excel{background:linear-gradient(135deg,#217346,#1d5c38)}
-        .announcement-icon.image{background:linear-gradient(135deg,#9c27b0,#7b1fa2)}
-        .announcement-icon.other{background:linear-gradient(135deg,var(--g6),#5a6268)}
-        .announcement-info{flex:1}
-        .announcement-info h4{color:var(--dk);font-size:14px;margin-bottom:5px}
-        .announcement-info p{color:var(--g6);font-size:12px}
-        .announcement-actions{display:flex;gap:8px}
-        .announcement-actions button{width:35px;height:35px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
-        .announcement-actions .view-btn{background:#e3f2fd;color:var(--male)}
-        .announcement-actions .download-btn{background:#e8f5e9;color:var(--suc)}
-        .announcement-actions .delete-btn{background:#ffebee;color:var(--dan)}
+        /* شبكة الإعلانات كأيقونات */
+        .announcements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:20px;padding:10px}
+        .announcement-card{display:flex;flex-direction:column;align-items:center;padding:20px 15px;background:var(--g1);border-radius:15px;cursor:pointer;transition:all .3s;text-decoration:none}
+        .announcement-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.15);background:#fff}
+        .announcement-card .file-icon{width:70px;height:70px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;margin-bottom:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+        .announcement-card .file-icon.pdf{background:linear-gradient(135deg,#dc3545,#c82333)}
+        .announcement-card .file-icon.word{background:linear-gradient(135deg,#2b579a,#1e3f6f)}
+        .announcement-card .file-icon.excel{background:linear-gradient(135deg,#217346,#1d5c38)}
+        .announcement-card .file-icon.image{background:linear-gradient(135deg,#9c27b0,#7b1fa2)}
+        .announcement-card .file-icon.other{background:linear-gradient(135deg,var(--g6),#5a6268)}
+        .announcement-card .file-title{font-size:12px;color:var(--dk);text-align:center;font-weight:bold;line-height:1.4;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+        .announcement-card .file-date{font-size:10px;color:var(--g6);margin-top:5px}
         
-        .empty-announcements{text-align:center;padding:40px;color:var(--g6)}
-        .empty-announcements i{font-size:50px;margin-bottom:15px;opacity:0.3}
+        .empty-announcements{text-align:center;padding:50px;color:var(--g6)}
+        .empty-announcements i{font-size:60px;margin-bottom:15px;opacity:0.3}
+        .empty-announcements p{font-size:14px}
         
         .dash{max-width:1100px;margin:30px auto;background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
         .dash-header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--pr)}
@@ -133,16 +130,33 @@
         .info-box.purple{background:linear-gradient(135deg,#ede7f6,#d1c4e9);color:#5e35b1}
         .info-box.green{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);color:#2e7d32}
         
-        /* Password Input Styles */
         .password-wrapper{position:relative}
         .password-wrapper .fc{padding-left:45px}
         .password-toggle{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--g6);cursor:pointer;font-size:16px}
-        .password-toggle:hover{color:var(--pr)}
         
         .login-icon{width:80px;height:80px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:35px;color:#fff}
         .login-icon.admin{background:linear-gradient(135deg,var(--purple),#9d7cd8)}
         .login-icon.judge{background:linear-gradient(135deg,var(--pr),var(--pr-l))}
         
+        /* إدارة الإعلانات في لوحة المشرف */
+        .admin-announcement-item{display:flex;align-items:center;gap:15px;padding:15px;background:var(--g1);border-radius:12px;margin-bottom:10px;transition:all .2s}
+        .admin-announcement-item:hover{background:#fff;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+        .admin-announcement-item .a-icon{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
+        .admin-announcement-item .a-icon.pdf{background:linear-gradient(135deg,#dc3545,#c82333)}
+        .admin-announcement-item .a-icon.word{background:linear-gradient(135deg,#2b579a,#1e3f6f)}
+        .admin-announcement-item .a-icon.excel{background:linear-gradient(135deg,#217346,#1d5c38)}
+        .admin-announcement-item .a-icon.image{background:linear-gradient(135deg,#9c27b0,#7b1fa2)}
+        .admin-announcement-item .a-icon.other{background:linear-gradient(135deg,var(--g6),#5a6268)}
+        .admin-announcement-item .a-info{flex:1}
+        .admin-announcement-item .a-info h4{color:var(--dk);font-size:14px;margin-bottom:5px}
+        .admin-announcement-item .a-info p{color:var(--g6);font-size:12px}
+        .admin-announcement-item .a-actions{display:flex;gap:8px}
+        .admin-announcement-item .a-actions button{width:35px;height:35px;border:none;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
+        .admin-announcement-item .a-actions button:hover{transform:scale(1.1)}
+        .admin-announcement-item .a-actions .view-btn{background:#e3f2fd;color:var(--male)}
+        .admin-announcement-item .a-actions .download-btn{background:#e8f5e9;color:var(--suc)}
+        .admin-announcement-item .a-actions .delete-btn{background:#ffebee;color:var(--dan)}
+
         #mainApp{display:none;min-height:100vh}
         #mainApp.show{display:flex}
         
@@ -251,7 +265,7 @@
         .upload-area h4{color:var(--dk);margin-bottom:10px}
         .upload-area p{color:var(--g6);font-size:13px}
         
-        @media(max-width:992px){.side,.u-box{display:none}.main{margin-right:0}.l-cards,.st-row,.gender-sections,.eval-footer{grid-template-columns:1fr}}
+        @media(max-width:992px){.side,.u-box{display:none}.main{margin-right:0}.l-cards,.st-row,.gender-sections,.eval-footer{grid-template-columns:1fr}.announcements-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}}
         @media(max-width:576px){.form-row{grid-template-columns:1fr}.result-btns{flex-direction:column}}
     </style>
 </head>
@@ -285,14 +299,16 @@
         </div>
     </div>
 
-    <!-- حاوية الإعلانات -->
+    <!-- حاوية الإعلانات - للمشاهدة فقط -->
     <div class="announcements-container">
         <div class="announcements-header">
             <h2><i class="fas fa-bullhorn"></i> إعلانات المسابقة</h2>
-            <button class="upload-btn" onclick="openModal('uploadModal')"><i class="fas fa-cloud-upload-alt"></i> رفع ملف</button>
         </div>
-        <div class="announcements-list" id="announcementsList">
-            <div class="empty-announcements"><i class="fas fa-folder-open"></i><p>لا توجد إعلانات حالياً</p></div>
+        <div class="announcements-grid" id="announcementsGrid">
+            <div class="empty-announcements">
+                <i class="fas fa-folder-open"></i>
+                <p>لا توجد إعلانات حالياً</p>
+            </div>
         </div>
     </div>
 
@@ -336,17 +352,12 @@
             <div class="login-icon admin"><i class="fas fa-user-shield"></i></div>
             <h3 class="modal-t" style="color:var(--purple)"><i class="fas fa-lock"></i> دخول المشرف العام</h3>
         </div>
-        <div class="info-box purple">
-            <i class="fas fa-shield-alt" style="font-size:20px"></i>
-            <span>هذه المنطقة محمية وتتطلب كلمة مرور للدخول</span>
-        </div>
+        <div class="info-box purple"><i class="fas fa-shield-alt" style="font-size:20px"></i><span>هذه المنطقة محمية</span></div>
         <div class="fg">
             <label><i class="fas fa-key"></i> كلمة المرور</label>
             <div class="password-wrapper">
                 <input type="password" class="fc" id="adminPass" placeholder="أدخل كلمة المرور" onkeypress="if(event.key==='Enter')adminLogin()">
-                <button type="button" class="password-toggle" onclick="togglePassword('adminPass', this)">
-                    <i class="fas fa-eye"></i>
-                </button>
+                <button type="button" class="password-toggle" onclick="togglePassword('adminPass',this)"><i class="fas fa-eye"></i></button>
             </div>
         </div>
         <div style="display:flex;gap:12px;margin-top:20px">
@@ -363,26 +374,20 @@
             <div class="login-icon judge"><i class="fas fa-user-tie"></i></div>
             <h3 class="modal-t"><i class="fas fa-gavel"></i> دخول لجنة التحكيم</h3>
         </div>
-        <div class="fg"><label><i class="fas fa-trophy"></i> نوع المسابقة</label>
-            <select class="fc" id="jCompType" onchange="loadJudges()">
-                <option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option>
-            </select>
+        <div class="fg"><label>نوع المسابقة</label>
+            <select class="fc" id="jCompType" onchange="loadJudges()"><option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option></select>
         </div>
-        <div class="fg"><label><i class="fas fa-user"></i> اختر اسمك</label>
-            <select class="fc" id="jName" disabled><option value="">-- اختر المسابقة أولاً --</option></select>
-        </div>
+        <div class="fg"><label>اختر اسمك</label><select class="fc" id="jName" disabled><option value="">-- اختر المسابقة أولاً --</option></select></div>
         <div class="fg">
-            <label><i class="fas fa-key"></i> كلمة المرور</label>
+            <label>كلمة المرور</label>
             <div class="password-wrapper">
-                <input type="password" class="fc" id="jPass" placeholder="أدخل كلمة المرور" onkeypress="if(event.key==='Enter')judgeLogin()">
-                <button type="button" class="password-toggle" onclick="togglePassword('jPass', this)">
-                    <i class="fas fa-eye"></i>
-                </button>
+                <input type="password" class="fc" id="jPass" placeholder="123" onkeypress="if(event.key==='Enter')judgeLogin()">
+                <button type="button" class="password-toggle" onclick="togglePassword('jPass',this)"><i class="fas fa-eye"></i></button>
             </div>
         </div>
-        <div class="info-box green"><i class="fas fa-info-circle"></i> كلمة المرور للمحكمين: <strong>123</strong></div>
+        <div class="info-box green"><i class="fas fa-info-circle"></i> كلمة المرور: <strong>123</strong></div>
         <div style="display:flex;gap:12px">
-            <button class="btn btn-pr" onclick="judgeLogin()" style="flex:1"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button class="btn btn-pr" onclick="judgeLogin()" style="flex:1">دخول</button>
             <button class="btn btn-se" onclick="closeModal('judgeModal')">إلغاء</button>
         </div>
     </div>
@@ -393,62 +398,37 @@
     <div class="modal-c" style="max-width:800px;position:relative">
         <button class="modal-close" onclick="closeModal('aboutModal')"><i class="fas fa-times"></i></button>
         <div class="modal-header"><h3 class="modal-t"><i class="fas fa-info-circle"></i> التعريف بالنظام</h3></div>
-        
-        <div class="about-section">
-            <h3><i class="fas fa-bullseye"></i> رؤية النظام</h3>
-            <p>أن يكون النظام الرائد في إدارة مسابقات القرآن الكريم على مستوى السلطنة.</p>
+        <div class="about-section"><h3><i class="fas fa-bullseye"></i> رؤية النظام</h3><p>أن يكون النظام الرائد في إدارة مسابقات القرآن الكريم.</p></div>
+        <div class="about-section"><h3><i class="fas fa-rocket"></i> رسالة النظام</h3><p>تقديم منصة إلكترونية متكاملة لإدارة مسابقات القرآن الكريم.</p></div>
+        <div class="about-section"><h3><i class="fas fa-flag"></i> أهداف النظام</h3>
+            <ul><li><i class="fas fa-check-circle"></i> أتمتة عملية تسجيل المتسابقين</li><li><i class="fas fa-check-circle"></i> توفير آلية تقييم عادلة</li><li><i class="fas fa-check-circle"></i> إصدار النتائج بشكل فوري</li></ul>
         </div>
-        
-        <div class="about-section">
-            <h3><i class="fas fa-rocket"></i> رسالة النظام</h3>
-            <p>تقديم منصة إلكترونية متكاملة لإدارة مسابقات القرآن الكريم تضمن الدقة والشفافية.</p>
-        </div>
-        
-        <div class="about-section">
-            <h3><i class="fas fa-flag"></i> أهداف النظام</h3>
-            <ul>
-                <li><i class="fas fa-check-circle"></i> أتمتة عملية تسجيل المتسابقين</li>
-                <li><i class="fas fa-check-circle"></i> توفير آلية تقييم عادلة وشفافة</li>
-                <li><i class="fas fa-check-circle"></i> تسهيل عملية التحكيم وتوحيد المعايير</li>
-                <li><i class="fas fa-check-circle"></i> إصدار النتائج والتقارير بشكل فوري</li>
-                <li><i class="fas fa-check-circle"></i> توثيق التسجيلات الصوتية للمتسابقين</li>
-            </ul>
-        </div>
-        
-        <div class="about-section">
-            <h3><i class="fas fa-history"></i> المراحل التطويرية</h3>
+        <div class="about-section"><h3><i class="fas fa-history"></i> المراحل التطويرية</h3>
             <div class="timeline">
-                <div class="timeline-item"><h4>المرحلة الأولى</h4><p>إنشاء الهيكل الأساسي للنظام</p></div>
-                <div class="timeline-item"><h4>المرحلة الثانية</h4><p>نظام تسجيل المتسابقين</p></div>
-                <div class="timeline-item"><h4>المرحلة الثالثة</h4><p>استمارات التقييم الإلكترونية</p></div>
+                <div class="timeline-item"><h4>المرحلة الأولى</h4><p>الهيكل الأساسي</p></div>
+                <div class="timeline-item"><h4>المرحلة الثانية</h4><p>نظام التسجيل</p></div>
+                <div class="timeline-item"><h4>المرحلة الثالثة</h4><p>استمارات التقييم</p></div>
                 <div class="timeline-item"><h4>المرحلة الرابعة</h4><p>التسجيل الصوتي</p></div>
-                <div class="timeline-item"><h4>المرحلة الخامسة</h4><p>نظام النتائج والتقارير</p></div>
-                <div class="timeline-item"><h4>المرحلة السادسة</h4><p>نظام الإعلانات</p></div>
+                <div class="timeline-item"><h4>المرحلة الخامسة</h4><p>النتائج والتقارير</p></div>
             </div>
         </div>
-        
-        <div style="text-align:center;padding:20px;background:var(--g1);border-radius:10px">
-            <p style="color:var(--g6)"><i class="fas fa-code"></i> الإصدار <strong style="color:var(--pr)">2.0</strong></p>
-        </div>
+        <div style="text-align:center;padding:20px;background:var(--g1);border-radius:10px"><p style="color:var(--g6)">الإصدار <strong style="color:var(--pr)">2.0</strong></p></div>
     </div>
 </div>
 
-<!-- نافذة رفع الملفات -->
+<!-- نافذة رفع الملفات (للمشرف فقط) -->
 <div class="modal" id="uploadModal">
     <div class="modal-c" style="max-width:600px;position:relative">
         <button class="modal-close" onclick="closeModal('uploadModal')"><i class="fas fa-times"></i></button>
         <div class="modal-header"><h3 class="modal-t"><i class="fas fa-cloud-upload-alt"></i> رفع إعلان جديد</h3></div>
-        <div class="fg"><label><i class="fas fa-heading"></i> عنوان الإعلان</label><input type="text" class="fc" id="announcementTitle" placeholder="أدخل عنوان الإعلان"></div>
-        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" 
-             ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <h4>اسحب الملف هنا أو اضغط للاختيار</h4>
-            <p>PDF, Word, Excel, صور</p>
+        <div class="fg"><label>عنوان الإعلان</label><input type="text" class="fc" id="announcementTitle" placeholder="أدخل عنوان الإعلان"></div>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <i class="fas fa-cloud-upload-alt"></i><h4>اسحب الملف هنا أو اضغط للاختيار</h4><p>PDF, Word, Excel, صور</p>
         </div>
         <input type="file" id="fileInput" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif" onchange="handleFileSelect(event)">
         <div id="selectedFile" style="display:none;padding:15px;background:var(--g1);border-radius:10px;margin-bottom:20px">
             <div style="display:flex;align-items:center;gap:15px">
-                <div id="fileIcon" class="announcement-icon"></div>
+                <div id="fileIcon" class="a-icon"></div>
                 <div style="flex:1"><h4 id="fileName" style="color:var(--dk)"></h4><p id="fileSize" style="color:var(--g6);font-size:12px"></p></div>
                 <button onclick="clearSelectedFile()" style="background:none;border:none;color:var(--dan);cursor:pointer;font-size:18px"><i class="fas fa-times-circle"></i></button>
             </div>
@@ -480,31 +460,16 @@
             </div>
             <div class="form-row">
                 <div class="fg"><label>الصف</label>
-                    <select class="fc" id="regGrade" required>
-                        <option value="">-- اختر --</option><option value="تعليم مبكر">تعليم مبكر</option>
-                        <option value="الأول">الأول</option><option value="الثاني">الثاني</option><option value="الثالث">الثالث</option>
-                        <option value="الرابع">الرابع</option><option value="الخامس">الخامس</option><option value="السادس">السادس</option>
-                        <option value="السابع">السابع</option><option value="الثامن">الثامن</option><option value="التاسع">التاسع</option>
-                        <option value="العاشر">العاشر</option><option value="الحادي عشر">الحادي عشر</option><option value="الثاني عشر">الثاني عشر</option>
-                    </select>
+                    <select class="fc" id="regGrade" required><option value="">-- اختر --</option><option value="تعليم مبكر">تعليم مبكر</option><option value="الأول">الأول</option><option value="الثاني">الثاني</option><option value="الثالث">الثالث</option><option value="الرابع">الرابع</option><option value="الخامس">الخامس</option><option value="السادس">السادس</option><option value="السابع">السابع</option><option value="الثامن">الثامن</option><option value="التاسع">التاسع</option><option value="العاشر">العاشر</option><option value="الحادي عشر">الحادي عشر</option><option value="الثاني عشر">الثاني عشر</option></select>
                 </div>
                 <div class="fg"><label>المدرسة</label><input type="text" class="fc" id="regSchool" required></div>
             </div>
             <div class="form-row">
-                <div class="fg"><label>الولاية</label>
-                    <select class="fc" id="regWilayat" required>
-                        <option value="">-- اختر --</option><option value="مسقط">مسقط</option><option value="مطرح">مطرح</option>
-                        <option value="بوشر">بوشر</option><option value="السيب">السيب</option><option value="العامرات">العامرات</option><option value="قريات">قريات</option>
-                    </select>
-                </div>
+                <div class="fg"><label>الولاية</label><select class="fc" id="regWilayat" required><option value="">-- اختر --</option><option value="مسقط">مسقط</option><option value="مطرح">مطرح</option><option value="بوشر">بوشر</option><option value="السيب">السيب</option><option value="العامرات">العامرات</option><option value="قريات">قريات</option></select></div>
                 <div class="fg"><label>الجنسية</label><select class="fc" id="regNat" required><option value="">-- اختر --</option><option value="عماني">عماني</option><option value="غير عماني">غير عماني</option></select></div>
             </div>
             <div class="form-row">
-                <div class="fg"><label>نوع المسابقة</label>
-                    <select class="fc" id="regComp" required onchange="updateLevels()">
-                        <option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option>
-                    </select>
-                </div>
+                <div class="fg"><label>نوع المسابقة</label><select class="fc" id="regComp" required onchange="updateLevels()"><option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option></select></div>
                 <div class="fg"><label>المستوى</label><select class="fc" id="regLevel" required><option value="">-- اختر المسابقة أولاً --</option></select></div>
             </div>
             <div class="fg"><label>الأجزاء المشارك بها</label><input type="text" class="fc" id="regParts" required placeholder="مثال: من جزء عم إلى جزء تبارك"></div>
@@ -559,30 +524,17 @@
 <script>
 // ========== البيانات ==========
 const DB = {
-    user: null,
-    adminPass: '12345',  // كلمة سر المشرف العام
-    judgePass: '123',    // كلمة سر المحكمين
-    approved: false,
-    judges: [],
-    students: [],
-    announcements: [],
-    curStudent: null,
-    selectedFile: null,
+    user: null, adminPass: '12345', judgePass: '123', approved: false,
+    judges: [], students: [], announcements: [],
+    curStudent: null, selectedFile: null,
     rec: {active:false, paused:false, timer:null, time:0, chunks:[], recorder:null, url:null, stream:null}
 };
 
-const HIFZ_LVS = {
-    'متميز':{name:'المتميز (10 أجزاء)',q:8}, 'أول':{name:'الأول (5 أجزاء)',q:5},
-    'ثاني':{name:'الثاني (4 أجزاء)',q:4}, 'ثالث':{name:'الثالث (3 أجزاء)',q:3},
-    'رابع':{name:'الرابع (جزءان)',q:3}, 'خامس':{name:'الخامس (جزء)',q:3}
-};
-
-const TILAWA_LVS = {
-    'أول':{name:'الأول (4 أجزاء)',q:4}, 'ثاني':{name:'الثاني (3 أجزاء)',q:3}, 'ثالث':{name:'الثالث (جزءان)',q:2}
-};
+const HIFZ_LVS = {'متميز':{name:'المتميز (10 أجزاء)',q:8},'أول':{name:'الأول (5 أجزاء)',q:5},'ثاني':{name:'الثاني (4 أجزاء)',q:4},'ثالث':{name:'الثالث (3 أجزاء)',q:3},'رابع':{name:'الرابع (جزءان)',q:3},'خامس':{name:'الخامس (جزء)',q:3}};
+const TILAWA_LVS = {'أول':{name:'الأول (4 أجزاء)',q:4},'ثاني':{name:'الثاني (3 أجزاء)',q:3},'ثالث':{name:'الثالث (جزءان)',q:2}};
 
 // ========== التهيئة ==========
-document.addEventListener('DOMContentLoaded', () => { updateStats(); renderAnnouncements(); });
+document.addEventListener('DOMContentLoaded', () => { updateStats(); renderPublicAnnouncements(); });
 
 function updateStats() {
     document.getElementById('stat1').textContent = [...new Set(DB.students.map(s => s.school))].length;
@@ -591,122 +543,105 @@ function updateStats() {
     document.getElementById('stat4').textContent = DB.students.filter(s => s.comp === 'hifz').length;
 }
 
-// ========== إظهار/إخفاء كلمة المرور ==========
-function togglePassword(inputId, btn) {
-    const input = document.getElementById(inputId);
-    const icon = btn.querySelector('i');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fas fa-eye-slash';
-    } else {
-        input.type = 'password';
-        icon.className = 'fas fa-eye';
-    }
-}
+function togglePassword(id, btn) { const i=document.getElementById(id); const ic=btn.querySelector('i'); if(i.type==='password'){i.type='text';ic.className='fas fa-eye-slash';}else{i.type='password';ic.className='fas fa-eye';}}
 
-// ========== دخول المشرف العام ==========
-function openAdminLogin() {
-    document.getElementById('adminPass').value = '';
-    openModal('adminLoginModal');
-    setTimeout(() => document.getElementById('adminPass').focus(), 300);
-}
+// ========== عرض الإعلانات للعامة (أيقونات) ==========
+function getFileType(f){const e=f.split('.').pop().toLowerCase();return['pdf'].includes(e)?'pdf':['doc','docx'].includes(e)?'word':['xls','xlsx'].includes(e)?'excel':['jpg','jpeg','png','gif'].includes(e)?'image':'other';}
+function getFileIcon(t){return{'pdf':'<i class="fas fa-file-pdf"></i>','word':'<i class="fas fa-file-word"></i>','excel':'<i class="fas fa-file-excel"></i>','image':'<i class="fas fa-file-image"></i>','other':'<i class="fas fa-file"></i>'}[t]||'<i class="fas fa-file"></i>';}
+function formatFileSize(b){return b<1024?b+' B':b<1024*1024?(b/1024).toFixed(1)+' KB':(b/(1024*1024)).toFixed(1)+' MB';}
 
-function adminLogin() {
-    const pass = document.getElementById('adminPass').value;
-    if (pass === DB.adminPass) {
-        closeModal('adminLoginModal');
-        DB.user = {role: 'admin', name: 'المشرف العام'};
-        enterApp();
-    } else {
-        alert('❌ كلمة المرور غير صحيحة!\n\nتأكد من إدخال كلمة المرور الصحيحة.');
-        document.getElementById('adminPass').value = '';
-        document.getElementById('adminPass').focus();
-    }
-}
-
-// ========== دخول المحكم ==========
-function openJudgeLogin() {
-    document.getElementById('jCompType').value = '';
-    document.getElementById('jName').innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>';
-    document.getElementById('jName').disabled = true;
-    document.getElementById('jPass').value = '';
-    openModal('judgeModal');
-}
-
-function loadJudges() {
-    const comp = document.getElementById('jCompType').value;
-    const sel = document.getElementById('jName');
-    if (!comp) { sel.innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>'; sel.disabled = true; return; }
-    const judges = DB.judges.filter(j => j.spec === comp);
-    if (!judges.length) { sel.innerHTML = '<option value="">لا يوجد محكمين</option>'; sel.disabled = true; return; }
-    sel.innerHTML = '<option value="">-- اختر اسمك --</option>' + judges.map(j => `<option value="${j.id}">${j.name} ${j.isLead?'⭐':''} (${j.committee})</option>`).join('');
-    sel.disabled = false;
-}
-
-function judgeLogin() {
-    const id = parseInt(document.getElementById('jName').value);
-    const pass = document.getElementById('jPass').value;
-    if (!id) { alert('اختر اسمك من القائمة'); return; }
-    if (pass !== DB.judgePass) {
-        alert('❌ كلمة المرور غير صحيحة!\n\nكلمة المرور الصحيحة: 123');
-        document.getElementById('jPass').value = '';
-        document.getElementById('jPass').focus();
+function renderPublicAnnouncements() {
+    const c = document.getElementById('announcementsGrid');
+    if (DB.announcements.length === 0) {
+        c.innerHTML = `<div class="empty-announcements"><i class="fas fa-folder-open"></i><p>لا توجد إعلانات حالياً</p></div>`;
         return;
     }
-    const j = DB.judges.find(x => x.id === id);
-    closeModal('judgeModal');
-    DB.user = {role:'judge', id:j.id, name:j.name, spec:j.spec, isLead:j.isLead, committee:j.committee};
-    enterApp();
+    c.innerHTML = DB.announcements.map(a => `
+        <div class="announcement-card" onclick="viewAnnouncement(${a.id})" title="${a.title}">
+            <div class="file-icon ${a.fileType}">${getFileIcon(a.fileType)}</div>
+            <div class="file-title">${a.title}</div>
+            <div class="file-date">${a.date}</div>
+        </div>
+    `).join('');
 }
 
-// ========== باقي الدوال ==========
-function openSchoolReg() { document.getElementById('regForm').reset(); document.getElementById('regLevel').innerHTML='<option value="">-- اختر المسابقة أولاً --</option>'; openModal('schoolRegModal'); }
+function viewAnnouncement(id) { const a=DB.announcements.find(x=>x.id===id); if(a)window.open(a.fileData); }
 
-function updateLevels() {
-    const comp = document.getElementById('regComp').value;
-    const sel = document.getElementById('regLevel');
-    if (!comp) { sel.innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>'; return; }
-    const lvs = comp === 'hifz' ? HIFZ_LVS : TILAWA_LVS;
-    sel.innerHTML = '<option value="">-- اختر --</option>' + Object.keys(lvs).map(k => `<option value="${k}">${lvs[k].name}</option>`).join('');
+// ========== إدارة الإعلانات (للمشرف فقط) ==========
+function handleDragOver(e){e.preventDefault();document.getElementById('uploadArea').classList.add('dragover');}
+function handleDragLeave(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');}
+function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');if(e.dataTransfer.files.length>0)processFile(e.dataTransfer.files[0]);}
+function handleFileSelect(e){if(e.target.files.length>0)processFile(e.target.files[0]);}
+function processFile(f){DB.selectedFile=f;const t=getFileType(f.name);document.getElementById('selectedFile').style.display='block';document.getElementById('fileIcon').className=`a-icon ${t}`;document.getElementById('fileIcon').innerHTML=getFileIcon(t);document.getElementById('fileName').textContent=f.name;document.getElementById('fileSize').textContent=formatFileSize(f.size);}
+function clearSelectedFile(){DB.selectedFile=null;document.getElementById('selectedFile').style.display='none';document.getElementById('fileInput').value='';}
+
+function uploadAnnouncement() {
+    const title=document.getElementById('announcementTitle').value.trim();if(!title){alert('أدخل عنوان الإعلان');return;}if(!DB.selectedFile){alert('اختر ملفاً');return;}
+    const reader=new FileReader();reader.onload=function(e){DB.announcements.push({id:Date.now(),title,fileName:DB.selectedFile.name,fileSize:DB.selectedFile.size,fileType:getFileType(DB.selectedFile.name),fileData:e.target.result,date:new Date().toLocaleDateString('ar-SA')});
+    renderPublicAnnouncements();closeModal('uploadModal');document.getElementById('announcementTitle').value='';clearSelectedFile();loadPage('announcements');alert('✅ تم رفع الإعلان!');};reader.readAsDataURL(DB.selectedFile);
 }
 
-function submitReg(e) {
-    e.preventDefault();
-    DB.students.push({
-        id: Date.now(), name: document.getElementById('regName').value, gender: document.getElementById('regGender').value,
-        grade: document.getElementById('regGrade').value, school: document.getElementById('regSchool').value,
-        wilayat: document.getElementById('regWilayat').value, nat: document.getElementById('regNat').value,
-        comp: document.getElementById('regComp').value, level: document.getElementById('regLevel').value,
-        parts: document.getElementById('regParts').value, supName: document.getElementById('regSupName').value,
-        supPhone: document.getElementById('regSupPhone').value, schPhone: document.getElementById('regSchPhone').value,
-        evals: [], rec: null
-    });
-    closeModal('schoolRegModal'); updateStats(); alert('✅ تم التسجيل بنجاح!');
+function deleteAnnouncement(id) { if(confirm('حذف هذا الإعلان؟')){DB.announcements=DB.announcements.filter(a=>a.id!==id);renderPublicAnnouncements();loadPage('announcements');}}
+function downloadAnnouncement(id) { const a=DB.announcements.find(x=>x.id===id);if(a){const l=document.createElement('a');l.href=a.fileData;l.download=a.fileName;l.click();}}
+
+// ========== صفحة إدارة الإعلانات للمشرف ==========
+function pgAnnouncements() {
+    let list = '';
+    if (DB.announcements.length === 0) {
+        list = '<div class="empty"><i class="fas fa-bullhorn"></i><p>لا توجد إعلانات</p></div>';
+    } else {
+        list = DB.announcements.map(a => `
+            <div class="admin-announcement-item">
+                <div class="a-icon ${a.fileType}">${getFileIcon(a.fileType)}</div>
+                <div class="a-info">
+                    <h4>${a.title}</h4>
+                    <p>${a.fileName} • ${formatFileSize(a.fileSize)} • ${a.date}</p>
+                </div>
+                <div class="a-actions">
+                    <button class="view-btn" onclick="viewAnnouncement(${a.id})" title="عرض"><i class="fas fa-eye"></i></button>
+                    <button class="download-btn" onclick="downloadAnnouncement(${a.id})" title="تنزيل"><i class="fas fa-download"></i></button>
+                    <button class="delete-btn" onclick="deleteAnnouncement(${a.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    return `<div class="card">
+        <div class="card-h">
+            <h3><i class="fas fa-bullhorn"></i> إدارة الإعلانات (${DB.announcements.length})</h3>
+            <button class="btn btn-su btn-sm" onclick="openModal('uploadModal')"><i class="fas fa-plus"></i> رفع إعلان جديد</button>
+        </div>
+        <div class="card-b">${list}</div>
+    </div>`;
 }
+
+// ========== الدخول ==========
+function openAdminLogin() { document.getElementById('adminPass').value='';openModal('adminLoginModal');setTimeout(()=>document.getElementById('adminPass').focus(),300); }
+function adminLogin() { const p=document.getElementById('adminPass').value;if(p===DB.adminPass){closeModal('adminLoginModal');DB.user={role:'admin',name:'المشرف العام'};enterApp();}else{alert('❌ كلمة المرور غير صحيحة!');document.getElementById('adminPass').value='';document.getElementById('adminPass').focus();}}
+
+function openJudgeLogin() { document.getElementById('jCompType').value='';document.getElementById('jName').innerHTML='<option value="">-- اختر المسابقة أولاً --</option>';document.getElementById('jName').disabled=true;document.getElementById('jPass').value='';openModal('judgeModal'); }
+function loadJudges() { const c=document.getElementById('jCompType').value,s=document.getElementById('jName');if(!c){s.innerHTML='<option value="">-- اختر المسابقة أولاً --</option>';s.disabled=true;return;}const j=DB.judges.filter(x=>x.spec===c);if(!j.length){s.innerHTML='<option value="">لا يوجد محكمين</option>';s.disabled=true;return;}s.innerHTML='<option value="">-- اختر --</option>'+j.map(x=>`<option value="${x.id}">${x.name} ${x.isLead?'⭐':''} (${x.committee})</option>`).join('');s.disabled=false; }
+function judgeLogin() { const id=parseInt(document.getElementById('jName').value),p=document.getElementById('jPass').value;if(!id){alert('اختر اسمك');return;}if(p!==DB.judgePass){alert('❌ كلمة المرور غير صحيحة!');document.getElementById('jPass').value='';document.getElementById('jPass').focus();return;}const j=DB.judges.find(x=>x.id===id);closeModal('judgeModal');DB.user={role:'judge',id:j.id,name:j.name,spec:j.spec,isLead:j.isLead,committee:j.committee};enterApp(); }
+
+function openSchoolReg() { document.getElementById('regForm').reset();document.getElementById('regLevel').innerHTML='<option value="">-- اختر المسابقة أولاً --</option>';openModal('schoolRegModal'); }
+function updateLevels() { const c=document.getElementById('regComp').value,s=document.getElementById('regLevel');if(!c){s.innerHTML='<option value="">-- اختر المسابقة أولاً --</option>';return;}const l=c==='hifz'?HIFZ_LVS:TILAWA_LVS;s.innerHTML='<option value="">-- اختر --</option>'+Object.keys(l).map(k=>`<option value="${k}">${l[k].name}</option>`).join(''); }
+function submitReg(e) { e.preventDefault();DB.students.push({id:Date.now(),name:document.getElementById('regName').value,gender:document.getElementById('regGender').value,grade:document.getElementById('regGrade').value,school:document.getElementById('regSchool').value,wilayat:document.getElementById('regWilayat').value,nat:document.getElementById('regNat').value,comp:document.getElementById('regComp').value,level:document.getElementById('regLevel').value,parts:document.getElementById('regParts').value,supName:document.getElementById('regSupName').value,supPhone:document.getElementById('regSupPhone').value,schPhone:document.getElementById('regSchPhone').value,evals:[],rec:null});closeModal('schoolRegModal');updateStats();alert('✅ تم التسجيل!'); }
 
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
 function enterApp() {
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('mainApp').classList.add('show');
-    document.getElementById('backBtn').classList.add('show');
-    document.getElementById('userName').textContent = DB.user.name;
-    document.getElementById('userRole').textContent = DB.user.role === 'admin' ? 'مشرف عام' : 'محكم';
-    buildMenu(); loadPage(DB.user.role === 'admin' ? 'dashboard' : 'judging');
+    document.getElementById('loginPage').style.display='none';document.getElementById('mainApp').classList.add('show');document.getElementById('backBtn').classList.add('show');
+    document.getElementById('userName').textContent=DB.user.name;document.getElementById('userRole').textContent=DB.user.role==='admin'?'مشرف عام':'محكم';
+    buildMenu();loadPage(DB.user.role==='admin'?'dashboard':'judging');
 }
 
-function goHome() {
-    DB.user = null; stopRecording();
-    document.getElementById('loginPage').style.display = 'block';
-    document.getElementById('mainApp').classList.remove('show');
-    document.getElementById('backBtn').classList.remove('show');
-    updateStats();
-}
+function goHome() { DB.user=null;stopRecording();document.getElementById('loginPage').style.display='block';document.getElementById('mainApp').classList.remove('show');document.getElementById('backBtn').classList.remove('show');updateStats();renderPublicAnnouncements(); }
 
 function buildMenu() {
     document.getElementById('sideMenu').innerHTML = DB.user.role === 'admin' ?
         `<div class="m-item active" onclick="loadPage('dashboard',this)"><i class="fas fa-home"></i> لوحة التحكم</div>
+         <div class="m-item" onclick="loadPage('announcements',this)"><i class="fas fa-bullhorn"></i> الإعلانات</div>
          <div class="m-item" onclick="loadPage('students',this)"><i class="fas fa-users"></i> المتسابقين</div>
          <div class="m-item" onclick="loadPage('judges',this)"><i class="fas fa-user-tie"></i> المحكمين</div>
          <div class="m-item" onclick="loadPage('results',this)"><i class="fas fa-trophy"></i> النتائج</div>` :
@@ -715,15 +650,22 @@ function buildMenu() {
 }
 
 function loadPage(pg, el) {
-    if (el) { document.querySelectorAll('.m-item').forEach(m => m.classList.remove('active')); el.classList.add('active'); }
-    document.getElementById('pageTitle').innerHTML = {dashboard:'لوحة التحكم',students:'المتسابقين',judges:'المحكمين',results:'النتائج',judging:'التقييم',myevals:'تقييماتي'}[pg];
+    if(el){document.querySelectorAll('.m-item').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
+    const titles = {dashboard:'لوحة التحكم',announcements:'إدارة الإعلانات',students:'المتسابقين',judges:'المحكمين',results:'النتائج',judging:'التقييم',myevals:'تقييماتي'};
+    document.getElementById('pageTitle').innerHTML = titles[pg] || pg;
     const c = document.getElementById('pageContent');
-    c.innerHTML = pg==='dashboard'?pgDash():pg==='students'?pgStudents():pg==='judges'?pgJudges():pg==='results'?pgResults():pg==='judging'?pgJudging():pgMyEvals();
+    if(pg==='dashboard')c.innerHTML=pgDash();
+    else if(pg==='announcements')c.innerHTML=pgAnnouncements();
+    else if(pg==='students')c.innerHTML=pgStudents();
+    else if(pg==='judges')c.innerHTML=pgJudges();
+    else if(pg==='results')c.innerHTML=pgResults();
+    else if(pg==='judging')c.innerHTML=pgJudging();
+    else if(pg==='myevals')c.innerHTML=pgMyEvals();
 }
 
+// ========== الصفحات ==========
 function pgDash() {
-    return `<div class="card" id="dashboardCard"><div class="card-h"><h3><i class="fas fa-chart-pie"></i> الإحصائيات</h3>
-        <button class="btn btn-dan btn-sm" onclick="downloadDashPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>
+    return `<div class="card" id="dashboardCard"><div class="card-h"><h3><i class="fas fa-chart-pie"></i> الإحصائيات</h3><button class="btn btn-dan btn-sm" onclick="downloadDashPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>
         <div class="card-b"><div class="st-row">
             <div class="st-box"><i class="fas fa-school" style="color:var(--sec)"></i><h3>${[...new Set(DB.students.map(s=>s.school))].length}</h3><p>المدارس</p></div>
             <div class="st-box"><i class="fas fa-users" style="color:var(--inf)"></i><h3>${DB.students.length}</h3><p>المتسابقين</p></div>
@@ -733,179 +675,76 @@ function pgDash() {
 }
 
 function pgStudents() {
-    const lvs = s => s.comp==='hifz'?HIFZ_LVS:TILAWA_LVS;
-    let r = DB.students.map((s,i) => `<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td>
-        <td>${s.grade}</td><td>${s.school}</td><td><span class="badge b-${s.comp==='hifz'?'suc':'inf'}">${s.comp==='hifz'?'حفظ':'تلاوة'}</span></td>
-        <td>${lvs(s)[s.level]?.name||s.level}</td><td>${s.evals.length?(s.evals.reduce((a,b)=>a+b.score,0)/s.evals.length).toFixed(1):'-'}</td>
-        <td><button class="btn btn-dan btn-sm" onclick="delSt(${s.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-    return `<div class="card"><div class="card-h"><h3><i class="fas fa-users"></i> المتسابقين (${DB.students.length})</h3>
-        <button class="btn btn-inf btn-sm" onclick="dlData()"><i class="fas fa-download"></i> Excel</button></div>
+    const lvs=s=>s.comp==='hifz'?HIFZ_LVS:TILAWA_LVS;
+    let r=DB.students.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td><td>${s.grade}</td><td>${s.school}</td><td><span class="badge b-${s.comp==='hifz'?'suc':'inf'}">${s.comp==='hifz'?'حفظ':'تلاوة'}</span></td><td>${lvs(s)[s.level]?.name||s.level}</td><td>${s.evals.length?(s.evals.reduce((a,b)=>a+b.score,0)/s.evals.length).toFixed(1):'-'}</td><td><button class="btn btn-dan btn-sm" onclick="delSt(${s.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-users"></i> المتسابقين (${DB.students.length})</h3><button class="btn btn-inf btn-sm" onclick="dlData()"><i class="fas fa-download"></i> Excel</button></div>
         <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>الجنس</th><th>الصف</th><th>المدرسة</th><th>المسابقة</th><th>المستوى</th><th>الدرجة</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-users"></i><p>لا يوجد متسابقين</p></div>'}</div></div>`;
 }
 
 function pgJudges() {
-    let r = DB.judges.map((j,i) => `<tr><td>${i+1}</td><td>${j.name}</td><td><span class="badge b-${j.spec==='hifz'?'suc':'inf'}">${j.spec==='hifz'?'حفظ':'تلاوة'}</span></td>
-        <td><span class="badge b-${j.committee==='ذكور'?'male':'female'}">${j.committee}</span></td><td>${j.isLead?'⭐ رئيس':'عضو'}</td>
-        <td><button class="btn btn-dan btn-sm" onclick="delJ(${j.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-    return `<div class="card"><div class="card-h"><h3><i class="fas fa-user-tie"></i> المحكمين (${DB.judges.length})</h3>
-        <button class="btn btn-su btn-sm" onclick="openModal('addJudgeModal')"><i class="fas fa-plus"></i> إضافة</button></div>
-        <div class="card-b"><div class="info-box green"><i class="fas fa-key"></i> كلمة مرور المحكمين: <strong>123</strong></div>
-        ${DB.judges.length?`<table><thead><tr><th>#</th><th>الاسم</th><th>المسابقة</th><th>اللجنة</th><th>الدور</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-user-tie"></i><p>لا يوجد محكمين</p></div>'}</div></div>`;
+    let r=DB.judges.map((j,i)=>`<tr><td>${i+1}</td><td>${j.name}</td><td><span class="badge b-${j.spec==='hifz'?'suc':'inf'}">${j.spec==='hifz'?'حفظ':'تلاوة'}</span></td><td><span class="badge b-${j.committee==='ذكور'?'male':'female'}">${j.committee}</span></td><td>${j.isLead?'⭐ رئيس':'عضو'}</td><td><button class="btn btn-dan btn-sm" onclick="delJ(${j.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-user-tie"></i> المحكمين (${DB.judges.length})</h3><button class="btn btn-su btn-sm" onclick="openModal('addJudgeModal')"><i class="fas fa-plus"></i> إضافة</button></div>
+        <div class="card-b"><div class="info-box green"><i class="fas fa-key"></i> كلمة المرور: <strong>123</strong></div>${DB.judges.length?`<table><thead><tr><th>#</th><th>الاسم</th><th>المسابقة</th><th>اللجنة</th><th>الدور</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-user-tie"></i><p>لا يوجد محكمين</p></div>'}</div></div>`;
 }
 
 function pgResults() {
-    return `<div class="card"><div class="card-h"><h3><i class="fas fa-trophy"></i> النتائج ${DB.approved?'<span class="badge b-suc">معتمدة</span>':''}</h3>
-        <div class="card-h-btns">${!DB.approved?'<button class="btn btn-su btn-sm" onclick="approve()"><i class="fas fa-check"></i> اعتماد</button>':
-        '<button class="btn btn-inf btn-sm" onclick="dlRes()"><i class="fas fa-file-excel"></i> Excel</button><button class="btn btn-dan btn-sm" onclick="dlResPDF()"><i class="fas fa-file-pdf"></i> PDF</button>'}</div></div>
-        <div class="card-b"><div class="tabs">
-            <button class="tab-b active" onclick="showResTab('male-hifz',this)">ذكور-حفظ</button>
-            <button class="tab-b" onclick="showResTab('male-tilawa',this)">ذكور-تلاوة</button>
-            <button class="tab-b" onclick="showResTab('female-hifz',this)">إناث-حفظ</button>
-            <button class="tab-b" onclick="showResTab('female-tilawa',this)">إناث-تلاوة</button>
-        </div><div id="resContent">${buildResTable('male','hifz')}</div></div></div>`;
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-trophy"></i> النتائج ${DB.approved?'<span class="badge b-suc">معتمدة</span>':''}</h3><div class="card-h-btns">${!DB.approved?'<button class="btn btn-su btn-sm" onclick="approve()"><i class="fas fa-check"></i> اعتماد</button>':'<button class="btn btn-inf btn-sm" onclick="dlRes()"><i class="fas fa-file-excel"></i> Excel</button><button class="btn btn-dan btn-sm" onclick="dlResPDF()"><i class="fas fa-file-pdf"></i> PDF</button>'}</div></div>
+        <div class="card-b"><div class="tabs"><button class="tab-b active" onclick="showResTab('male-hifz',this)">ذكور-حفظ</button><button class="tab-b" onclick="showResTab('male-tilawa',this)">ذكور-تلاوة</button><button class="tab-b" onclick="showResTab('female-hifz',this)">إناث-حفظ</button><button class="tab-b" onclick="showResTab('female-tilawa',this)">إناث-تلاوة</button></div><div id="resContent">${buildResTable('male','hifz')}</div></div></div>`;
 }
 
-function showResTab(key,btn) { document.querySelectorAll('.tab-b').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const[g,c]=key.split('-'); document.getElementById('resContent').innerHTML=buildResTable(g,c); }
+function showResTab(k,b){document.querySelectorAll('.tab-b').forEach(x=>x.classList.remove('active'));b.classList.add('active');const[g,c]=k.split('-');document.getElementById('resContent').innerHTML=buildResTable(g,c);}
 
-function buildResTable(gender,comp) {
-    const lvs = comp==='hifz'?HIFZ_LVS:TILAWA_LVS; let html='', hasData=false;
-    Object.keys(lvs).forEach(lv => {
-        const sts = DB.students.filter(s=>s.comp===comp&&s.gender===gender&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg);
-        if(sts.length) { hasData=true; html+=`<h5 style="margin:20px 0 10px;color:var(--sec)">${lvs[lv].name}</h5><table><thead><tr><th>#</th><th>الاسم</th><th>الصف</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>`;
-            sts.forEach((s,i)=>html+=`<tr class="${DB.approved?(i<3?['winner-gold','winner-silver','winner-bronze'][i]:''):''}"><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td><td><strong>${s.avg.toFixed(1)}</strong></td></tr>`);
-            html+='</tbody></table>'; }
-    });
-    return hasData?html:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';
+function buildResTable(g,c) {
+    const lvs=c==='hifz'?HIFZ_LVS:TILAWA_LVS;let h='',has=false;
+    Object.keys(lvs).forEach(lv=>{const sts=DB.students.filter(s=>s.comp===c&&s.gender===g&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg);if(sts.length){has=true;h+=`<h5 style="margin:20px 0 10px;color:var(--sec)">${lvs[lv].name}</h5><table><thead><tr><th>#</th><th>الاسم</th><th>الصف</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>`;sts.forEach((s,i)=>h+=`<tr class="${DB.approved?(i<3?['winner-gold','winner-silver','winner-bronze'][i]:''):''}"><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td><td><strong>${s.avg.toFixed(1)}</strong></td></tr>`);h+='</tbody></table>';}});
+    return has?h:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';
 }
 
 function pgJudging() {
-    const pend = DB.students.filter(s=>s.comp===DB.user.spec&&!s.evals.some(e=>e.jid===DB.user.id));
-    const lvs = DB.user.spec==='hifz'?HIFZ_LVS:TILAWA_LVS;
-    let r = pend.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td>
-        <td>${lvs[s.level]?.name||s.level}</td><td>${s.parts}</td><td><button class="btn btn-pr btn-sm" onclick="openEval(${s.id})"><i class="fas fa-clipboard-check"></i> تقييم</button></td></tr>`).join('');
-    return `<div class="card"><div class="card-h"><h3><i class="fas fa-clipboard-check"></i> المتسابقين (${pend.length})</h3></div>
-        <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>الجنس</th><th>المستوى</th><th>الأجزاء</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-check-circle" style="color:var(--suc)"></i><p>تم تقييم الجميع!</p></div>'}</div></div>`;
+    const pend=DB.students.filter(s=>s.comp===DB.user.spec&&!s.evals.some(e=>e.jid===DB.user.id)),lvs=DB.user.spec==='hifz'?HIFZ_LVS:TILAWA_LVS;
+    let r=pend.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td><td>${lvs[s.level]?.name||s.level}</td><td>${s.parts}</td><td><button class="btn btn-pr btn-sm" onclick="openEval(${s.id})"><i class="fas fa-clipboard-check"></i> تقييم</button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-clipboard-check"></i> المتسابقين (${pend.length})</h3></div><div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>الجنس</th><th>المستوى</th><th>الأجزاء</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-check-circle" style="color:var(--suc)"></i><p>تم تقييم الجميع!</p></div>'}</div></div>`;
 }
 
 function pgMyEvals() {
-    let r='',cnt=0; DB.students.forEach(s=>{const ev=s.evals.find(e=>e.jid===DB.user.id);if(ev){cnt++;r+=`<tr><td>${cnt}</td><td>${s.name}</td><td>${s.school}</td><td><strong>${ev.score.toFixed(1)}</strong></td></tr>`;}});
-    return `<div class="card"><div class="card-h"><h3><i class="fas fa-list-check"></i> تقييماتي (${cnt})</h3></div>
-        <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty">لا توجد تقييمات</div>'}</div></div>`;
+    let r='',cnt=0;DB.students.forEach(s=>{const ev=s.evals.find(e=>e.jid===DB.user.id);if(ev){cnt++;r+=`<tr><td>${cnt}</td><td>${s.name}</td><td>${s.school}</td><td><strong>${ev.score.toFixed(1)}</strong></td></tr>`;}});
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-list-check"></i> تقييماتي (${cnt})</h3></div><div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty">لا توجد تقييمات</div>'}</div></div>`;
 }
 
-// ========== الوظائف المساعدة ==========
-function saveJudge() {
-    const n = document.getElementById('newJName').value.trim(); if(!n)return alert('أدخل الاسم');
-    DB.judges.push({id:Date.now(),name:n,spec:document.getElementById('newJSpec').value,committee:document.getElementById('newJCommittee').value,isLead:document.getElementById('newJRole').value==='lead'});
-    closeModal('addJudgeModal'); loadPage('judges'); alert('✅ تم إضافة المحكم!');
-}
-
+// ========== الوظائف ==========
+function saveJudge() { const n=document.getElementById('newJName').value.trim();if(!n)return alert('أدخل الاسم');DB.judges.push({id:Date.now(),name:n,spec:document.getElementById('newJSpec').value,committee:document.getElementById('newJCommittee').value,isLead:document.getElementById('newJRole').value==='lead'});closeModal('addJudgeModal');loadPage('judges');alert('✅ تم إضافة المحكم!'); }
 function delJ(id) { if(confirm('حذف؟')){DB.judges=DB.judges.filter(j=>j.id!==id);loadPage('judges');}}
 function delSt(id) { if(confirm('حذف؟')){DB.students=DB.students.filter(s=>s.id!==id);loadPage('students');updateStats();}}
 function approve() { if(confirm('اعتماد النتائج؟')){DB.approved=true;loadPage('results');alert('✅ تم الاعتماد!');}}
 
 async function downloadDashPDF() { const{jsPDF}=window.jspdf;const c=await html2canvas(document.getElementById('dashboardCard'),{scale:2});const p=new jsPDF('p','mm','a4');p.addImage(c.toDataURL('image/png'),'PNG',10,10,190,0);p.save('لوحة_التحكم.pdf');}
-
-function dlData() {
-    const d=DB.students.map(s=>({'الاسم':s.name,'الجنس':s.gender==='male'?'ذكر':'أنثى','الصف':s.grade,'المدرسة':s.school,'المسابقة':s.comp==='hifz'?'حفظ':'تلاوة','المستوى':s.level}));
-    const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'المتسابقين');XLSX.writeFile(wb,'المتسابقين.xlsx');
-}
-
-function dlRes() {
-    let d=[];['male','female'].forEach(g=>['hifz','tilawa'].forEach(c=>{const lvs=c==='hifz'?HIFZ_LVS:TILAWA_LVS;Object.keys(lvs).forEach(lv=>{
-        DB.students.filter(s=>s.comp===c&&s.gender===g&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg)
-        .forEach((s,i)=>d.push({'الجنس':g==='male'?'ذكر':'أنثى','المسابقة':c==='hifz'?'حفظ':'تلاوة','المستوى':lvs[lv].name,'الترتيب':i+1,'الاسم':s.name,'الدرجة':s.avg.toFixed(1)}));
-    });}));
-    const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'النتائج');XLSX.writeFile(wb,'النتائج.xlsx');
-}
-
+function dlData() { const d=DB.students.map(s=>({'الاسم':s.name,'الجنس':s.gender==='male'?'ذكر':'أنثى','الصف':s.grade,'المدرسة':s.school,'المسابقة':s.comp==='hifz'?'حفظ':'تلاوة','المستوى':s.level}));const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'المتسابقين');XLSX.writeFile(wb,'المتسابقين.xlsx');}
+function dlRes() { let d=[];['male','female'].forEach(g=>['hifz','tilawa'].forEach(c=>{const lvs=c==='hifz'?HIFZ_LVS:TILAWA_LVS;Object.keys(lvs).forEach(lv=>{DB.students.filter(s=>s.comp===c&&s.gender===g&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg).forEach((s,i)=>d.push({'الجنس':g==='male'?'ذكر':'أنثى','المسابقة':c==='hifz'?'حفظ':'تلاوة','المستوى':lvs[lv].name,'الترتيب':i+1,'الاسم':s.name,'الدرجة':s.avg.toFixed(1)}));});}));const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'النتائج');XLSX.writeFile(wb,'النتائج.xlsx');}
 async function dlResPDF() { const{jsPDF}=window.jspdf;const c=await html2canvas(document.getElementById('resContent'),{scale:2});const p=new jsPDF('p','mm','a4');p.addImage(c.toDataURL('image/png'),'PNG',10,10,190,0);p.save('النتائج.pdf');}
 
-// ========== الإعلانات ==========
-function getFileType(f){const e=f.split('.').pop().toLowerCase();return['pdf'].includes(e)?'pdf':['doc','docx'].includes(e)?'word':['xls','xlsx'].includes(e)?'excel':['jpg','jpeg','png','gif'].includes(e)?'image':'other';}
-function getFileIcon(t){return{'pdf':'<i class="fas fa-file-pdf"></i>','word':'<i class="fas fa-file-word"></i>','excel':'<i class="fas fa-file-excel"></i>','image':'<i class="fas fa-file-image"></i>','other':'<i class="fas fa-file"></i>'}[t]||'<i class="fas fa-file"></i>';}
-function formatFileSize(b){return b<1024?b+' B':b<1024*1024?(b/1024).toFixed(1)+' KB':(b/(1024*1024)).toFixed(1)+' MB';}
-function handleDragOver(e){e.preventDefault();document.getElementById('uploadArea').classList.add('dragover');}
-function handleDragLeave(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');}
-function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');if(e.dataTransfer.files.length>0)processFile(e.dataTransfer.files[0]);}
-function handleFileSelect(e){if(e.target.files.length>0)processFile(e.target.files[0]);}
-function processFile(f){DB.selectedFile=f;const t=getFileType(f.name);document.getElementById('selectedFile').style.display='block';document.getElementById('fileIcon').className=`announcement-icon ${t}`;document.getElementById('fileIcon').innerHTML=getFileIcon(t);document.getElementById('fileName').textContent=f.name;document.getElementById('fileSize').textContent=formatFileSize(f.size);}
-function clearSelectedFile(){DB.selectedFile=null;document.getElementById('selectedFile').style.display='none';document.getElementById('fileInput').value='';}
-
-function uploadAnnouncement() {
-    const title=document.getElementById('announcementTitle').value.trim();if(!title){alert('أدخل عنوان الإعلان');return;}if(!DB.selectedFile){alert('اختر ملفاً');return;}
-    const reader=new FileReader();reader.onload=function(e){DB.announcements.push({id:Date.now(),title,fileName:DB.selectedFile.name,fileSize:DB.selectedFile.size,fileType:getFileType(DB.selectedFile.name),fileData:e.target.result,date:new Date().toLocaleDateString('ar-SA')});
-    renderAnnouncements();closeModal('uploadModal');document.getElementById('announcementTitle').value='';clearSelectedFile();alert('✅ تم رفع الإعلان!');};reader.readAsDataURL(DB.selectedFile);
-}
-
-function renderAnnouncements() {
-    const c=document.getElementById('announcementsList');
-    c.innerHTML=DB.announcements.length?DB.announcements.map(a=>`<div class="announcement-item"><div class="announcement-icon ${a.fileType}">${getFileIcon(a.fileType)}</div>
-        <div class="announcement-info"><h4>${a.title}</h4><p>${a.fileName} • ${formatFileSize(a.fileSize)} • ${a.date}</p></div>
-        <div class="announcement-actions"><button class="view-btn" onclick="viewAnnouncement(${a.id})"><i class="fas fa-eye"></i></button>
-        <button class="download-btn" onclick="downloadAnnouncement(${a.id})"><i class="fas fa-download"></i></button>
-        <button class="delete-btn" onclick="deleteAnnouncement(${a.id})"><i class="fas fa-trash"></i></button></div></div>`).join(''):'<div class="empty-announcements"><i class="fas fa-folder-open"></i><p>لا توجد إعلانات</p></div>';
-}
-
-function viewAnnouncement(id){const a=DB.announcements.find(x=>x.id===id);if(a)window.open(a.fileData);}
-function downloadAnnouncement(id){const a=DB.announcements.find(x=>x.id===id);if(a){const l=document.createElement('a');l.href=a.fileData;l.download=a.fileName;l.click();}}
-function deleteAnnouncement(id){if(confirm('حذف؟')){DB.announcements=DB.announcements.filter(a=>a.id!==id);renderAnnouncements();}}
-
-function showTopResults(gender,comp) {
-    document.getElementById('topResultsTitle').innerHTML=`<i class="fas fa-${gender}"></i> نتائج ${gender==='male'?'الذكور':'الإناث'} - ${comp==='tilawa'?'التلاوة':'الحفظ'}`;
-    const lvs=comp==='hifz'?HIFZ_LVS:TILAWA_LVS;let html='',hasRes=false;
-    Object.keys(lvs).forEach(lv=>{const sts=DB.students.filter(s=>s.comp===comp&&s.gender===gender&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg).slice(0,3);
-        if(sts.length){hasRes=true;html+=`<div style="margin-bottom:25px"><h4 style="color:${comp==='tilawa'?'var(--pr)':'var(--suc)'};margin-bottom:15px;padding:10px;background:var(--g1);border-radius:8px"><i class="fas fa-medal"></i> ${lvs[lv].name}</h4>
-        <table><thead><tr><th>المستوى</th><th>الترتيب</th><th>الاسم</th><th>الصف</th><th>المدرسة</th></tr></thead><tbody>`;
-        sts.forEach((s,i)=>html+=`<tr class="${['winner-gold','winner-silver','winner-bronze'][i]||''}"><td>${lvs[lv].name}</td><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td></tr>`);
-        html+=`</tbody></table></div>`;}});
-    document.getElementById('topResultsContent').innerHTML=hasRes?html:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';openModal('topResultsModal');
+function showTopResults(g,c) {
+    document.getElementById('topResultsTitle').innerHTML=`<i class="fas fa-${g}"></i> نتائج ${g==='male'?'الذكور':'الإناث'} - ${c==='tilawa'?'التلاوة':'الحفظ'}`;
+    const lvs=c==='hifz'?HIFZ_LVS:TILAWA_LVS;let h='',has=false;
+    Object.keys(lvs).forEach(lv=>{const sts=DB.students.filter(s=>s.comp===c&&s.gender===g&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg).slice(0,3);if(sts.length){has=true;h+=`<div style="margin-bottom:25px"><h4 style="color:${c==='tilawa'?'var(--pr)':'var(--suc)'};margin-bottom:15px;padding:10px;background:var(--g1);border-radius:8px"><i class="fas fa-medal"></i> ${lvs[lv].name}</h4><table><thead><tr><th>المستوى</th><th>الترتيب</th><th>الاسم</th><th>الصف</th><th>المدرسة</th></tr></thead><tbody>`;sts.forEach((s,i)=>h+=`<tr class="${['winner-gold','winner-silver','winner-bronze'][i]||''}"><td>${lvs[lv].name}</td><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td></tr>`);h+=`</tbody></table></div>`;}});
+    document.getElementById('topResultsContent').innerHTML=has?h:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';openModal('topResultsModal');
 }
 
 // ========== التسجيل الصوتي ==========
 function resetRec(){DB.rec={active:false,paused:false,timer:null,time:0,chunks:[],recorder:null,url:null,stream:null};}
-
-async function startRecording() {
-    try { if(DB.rec.paused&&DB.rec.recorder){DB.rec.recorder.resume();DB.rec.paused=false;DB.rec.active=true;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}
-    else{DB.rec.stream=await navigator.mediaDevices.getUserMedia({audio:true});DB.rec.recorder=new MediaRecorder(DB.rec.stream);DB.rec.chunks=[];DB.rec.recorder.ondataavailable=e=>DB.rec.chunks.push(e.data);
-    DB.rec.recorder.start();DB.rec.active=true;DB.rec.paused=false;DB.rec.time=0;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}}catch(e){alert('الميكروفون غير متاح');}
-}
-
+async function startRecording() { try{if(DB.rec.paused&&DB.rec.recorder){DB.rec.recorder.resume();DB.rec.paused=false;DB.rec.active=true;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}else{DB.rec.stream=await navigator.mediaDevices.getUserMedia({audio:true});DB.rec.recorder=new MediaRecorder(DB.rec.stream);DB.rec.chunks=[];DB.rec.recorder.ondataavailable=e=>DB.rec.chunks.push(e.data);DB.rec.recorder.start();DB.rec.active=true;DB.rec.paused=false;DB.rec.time=0;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}}catch(e){alert('الميكروفون غير متاح');}}
 function pauseRecording(){if(DB.rec.recorder&&DB.rec.active){DB.rec.recorder.pause();DB.rec.paused=true;DB.rec.active=false;clearInterval(DB.rec.timer);updateRecUI();}}
-
-function stopRecording() {
-    if(DB.rec.recorder){DB.rec.recorder.stop();DB.rec.active=false;DB.rec.paused=false;clearInterval(DB.rec.timer);if(DB.rec.stream)DB.rec.stream.getTracks().forEach(t=>t.stop());
-    DB.rec.recorder.onstop=()=>{const b=new Blob(DB.rec.chunks,{type:'audio/webm'});DB.rec.url=URL.createObjectURL(b);updateRecUI();document.getElementById('recAudio').innerHTML=`<audio controls src="${DB.rec.url}" style="width:100%"></audio>`;document.getElementById('recAudio').style.display='block';};}
-}
-
+function stopRecording() { if(DB.rec.recorder){DB.rec.recorder.stop();DB.rec.active=false;DB.rec.paused=false;clearInterval(DB.rec.timer);if(DB.rec.stream)DB.rec.stream.getTracks().forEach(t=>t.stop());DB.rec.recorder.onstop=()=>{const b=new Blob(DB.rec.chunks,{type:'audio/webm'});DB.rec.url=URL.createObjectURL(b);updateRecUI();document.getElementById('recAudio').innerHTML=`<audio controls src="${DB.rec.url}" style="width:100%"></audio>`;document.getElementById('recAudio').style.display='block';};}}
 function saveRecording(){if(DB.rec.url&&DB.curStudent){DB.curStudent.rec=DB.rec.url;alert('✅ تم حفظ التسجيل!');updateRecUI();}}
 function updateTimer(){DB.rec.time++;document.getElementById('recTimer').textContent=`${Math.floor(DB.rec.time/60).toString().padStart(2,'0')}:${(DB.rec.time%60).toString().padStart(2,'0')}`;}
-
-function updateRecUI() {
-    const rb=document.getElementById('recStartPause'),sb=document.getElementById('recStop'),sv=document.getElementById('recSave'),ind=document.getElementById('recInd'),st=document.getElementById('recStatus');
-    if(DB.rec.active){rb.innerHTML='<i class="fas fa-pause"></i>';rb.className='rec-btn pause';rb.onclick=pauseRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator recording';st.textContent='● جاري التسجيل...';st.style.color='var(--dan)';}
-    else if(DB.rec.paused){rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator paused';st.textContent='⏸ إيقاف مؤقت';st.style.color='var(--war)';}
-    else if(DB.rec.url){rb.disabled=true;sb.disabled=true;sv.disabled=DB.curStudent?.rec?true:false;ind.className='rec-indicator';st.textContent=DB.curStudent?.rec?'✅ تم الحفظ':'⏹ انتهى';st.style.color=DB.curStudent?.rec?'var(--suc)':'var(--dk)';}
-    else{rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;rb.disabled=false;sb.disabled=true;sv.disabled=true;ind.className='rec-indicator';st.textContent='اضغط للتسجيل';st.style.color='var(--g6)';}
-}
+function updateRecUI() { const rb=document.getElementById('recStartPause'),sb=document.getElementById('recStop'),sv=document.getElementById('recSave'),ind=document.getElementById('recInd'),st=document.getElementById('recStatus');if(DB.rec.active){rb.innerHTML='<i class="fas fa-pause"></i>';rb.className='rec-btn pause';rb.onclick=pauseRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator recording';st.textContent='● جاري التسجيل...';st.style.color='var(--dan)';}else if(DB.rec.paused){rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator paused';st.textContent='⏸ إيقاف مؤقت';st.style.color='var(--war)';}else if(DB.rec.url){rb.disabled=true;sb.disabled=true;sv.disabled=DB.curStudent?.rec?true:false;ind.className='rec-indicator';st.textContent=DB.curStudent?.rec?'✅ تم الحفظ':'⏹ انتهى';st.style.color=DB.curStudent?.rec?'var(--suc)':'var(--dk)';}else{rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;rb.disabled=false;sb.disabled=true;sv.disabled=true;ind.className='rec-indicator';st.textContent='اضغط للتسجيل';st.style.color='var(--g6)';}}
 
 // ========== التقييم ==========
 function openEval(id) {
     DB.curStudent=DB.students.find(s=>s.id===id);resetRec();const s=DB.curStudent,lvs=s.comp==='hifz'?HIFZ_LVS:TILAWA_LVS,nq=lvs[s.level]?.q||3;
-    let rows='';for(let i=1;i<=nq;i++){
-        rows+=s.comp==='hifz'?`<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="ist${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="err${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="taj${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`:
-        `<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="lj${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="lk${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tr${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tf${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="nd${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`;
-    }
-    const th=s.comp==='hifz'?`<tr><th rowspan="2">س</th><th colspan="2" class="hfz">الحفظ(75)</th><th rowspan="2">تجويد(25)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th class="hfz">استفتاح-2</th><th class="hfz">أخطاء-1</th></tr>`:
-        `<tr><th rowspan="2">س</th><th colspan="3">التلاوة(90)</th><th colspan="2" class="snd">الصوت(10)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th>جلي-3</th><th>خفي-2</th><th>تردد-1</th><th class="snd">تفاعل</th><th class="snd">نداوة</th></tr>`;
-    const rec=DB.user.isLead?`<div class="eval-rec"><h4 style="text-align:center;color:var(--dan);margin-bottom:15px"><i class="fas fa-microphone"></i> تسجيل المتسابق</h4>
-        <div class="rec-ctrl"><button class="rec-btn rec" id="recStartPause" onclick="startRecording()"><i class="fas fa-microphone"></i></button><button class="rec-btn stp" id="recStop" onclick="stopRecording()" disabled><i class="fas fa-stop"></i></button><button class="rec-btn sav" id="recSave" onclick="saveRecording()" disabled><i class="fas fa-save"></i></button></div>
-        <div style="text-align:center"><span id="recInd" class="rec-indicator"></span><span id="recTimer" class="rec-timer">00:00</span></div><div id="recStatus" class="rec-status">اضغط للتسجيل</div><div id="recAudio" style="display:none;margin-top:15px"></div></div>`:'';
-    document.getElementById('evalBox').innerHTML=`<div class="eval-header ${s.comp}"><h3>${s.comp==='hifz'?'تقييم الحفظ':'تقييم التلاوة'}</h3><p>${lvs[s.level]?.name}</p></div>${rec}
-        <div class="eval-info"><div><label>الاسم</label><span>${s.name}</span></div><div><label>الجنس</label><span>${s.gender==='male'?'ذكر':'أنثى'}</span></div><div><label>الصف</label><span>${s.grade}</span></div><div><label>المدرسة</label><span>${s.school}</span></div><div><label>الأجزاء</label><span>${s.parts}</span></div></div>
-        <div style="overflow-x:auto;padding:20px"><table class="eval-t"><thead>${th}</thead><tbody>${rows}</tbody></table></div>
-        <div class="eval-footer"><div class="avg-box"><h4>متوسط الدرجة</h4><span class="score" id="finalAvg">0</span></div><div class="notes-box"><h4><i class="fas fa-sticky-note"></i> الملاحظات العامة</h4><textarea id="generalNotes" placeholder="أدخل ملاحظاتك..."></textarea></div></div>
-        <div style="padding:20px;display:flex;justify-content:center;gap:15px;background:var(--g1);border-radius:0 0 15px 15px"><button class="btn btn-su" onclick="saveEval()"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-se" onclick="closeEval()">إلغاء</button></div>`;
+    let rows='';for(let i=1;i<=nq;i++){rows+=s.comp==='hifz'?`<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="ist${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="err${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="taj${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`:`<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="lj${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="lk${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tr${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tf${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="nd${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`;}
+    const th=s.comp==='hifz'?`<tr><th rowspan="2">س</th><th colspan="2" class="hfz">الحفظ(75)</th><th rowspan="2">تجويد(25)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th class="hfz">استفتاح-2</th><th class="hfz">أخطاء-1</th></tr>`:`<tr><th rowspan="2">س</th><th colspan="3">التلاوة(90)</th><th colspan="2" class="snd">الصوت(10)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th>جلي-3</th><th>خفي-2</th><th>تردد-1</th><th class="snd">تفاعل</th><th class="snd">نداوة</th></tr>`;
+    const rec=DB.user.isLead?`<div class="eval-rec"><h4 style="text-align:center;color:var(--dan);margin-bottom:15px"><i class="fas fa-microphone"></i> تسجيل المتسابق</h4><div class="rec-ctrl"><button class="rec-btn rec" id="recStartPause" onclick="startRecording()"><i class="fas fa-microphone"></i></button><button class="rec-btn stp" id="recStop" onclick="stopRecording()" disabled><i class="fas fa-stop"></i></button><button class="rec-btn sav" id="recSave" onclick="saveRecording()" disabled><i class="fas fa-save"></i></button></div><div style="text-align:center"><span id="recInd" class="rec-indicator"></span><span id="recTimer" class="rec-timer">00:00</span></div><div id="recStatus" class="rec-status">اضغط للتسجيل</div><div id="recAudio" style="display:none;margin-top:15px"></div></div>`:'';
+    document.getElementById('evalBox').innerHTML=`<div class="eval-header ${s.comp}"><h3>${s.comp==='hifz'?'تقييم الحفظ':'تقييم التلاوة'}</h3><p>${lvs[s.level]?.name}</p></div>${rec}<div class="eval-info"><div><label>الاسم</label><span>${s.name}</span></div><div><label>الجنس</label><span>${s.gender==='male'?'ذكر':'أنثى'}</span></div><div><label>الصف</label><span>${s.grade}</span></div><div><label>المدرسة</label><span>${s.school}</span></div><div><label>الأجزاء</label><span>${s.parts}</span></div></div><div style="overflow-x:auto;padding:20px"><table class="eval-t"><thead>${th}</thead><tbody>${rows}</tbody></table></div><div class="eval-footer"><div class="avg-box"><h4>متوسط الدرجة</h4><span class="score" id="finalAvg">0</span></div><div class="notes-box"><h4><i class="fas fa-sticky-note"></i> الملاحظات العامة</h4><textarea id="generalNotes" placeholder="أدخل ملاحظاتك..."></textarea></div></div><div style="padding:20px;display:flex;justify-content:center;gap:15px;background:var(--g1);border-radius:0 0 15px 15px"><button class="btn btn-su" onclick="saveEval()"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-se" onclick="closeEval()">إلغاء</button></div>`;
     openModal('evalModal');
 }
 
