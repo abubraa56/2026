@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة القرآن الكريم - محافظة مسقط</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--pr:#1a5f4a;--pr-l:#2d8a6e;--pr-d:#0d3d2e;--sec:#8b7355;--suc:#28a745;--war:#ffc107;--dan:#dc3545;--inf:#17a2b8;--g1:#f8f9fa;--g2:#e9ecef;--g3:#dee2e6;--g6:#6c757d;--dk:#343a40;--male:#1565c0;--female:#c2185b;--purple:#6f42c1}
+        body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100vh}
+        
+        #backBtn{position:fixed;top:15px;left:15px;z-index:9999;padding:12px 24px;background:linear-gradient(135deg,var(--dan),#c82333);color:#fff;border:none;border-radius:25px;cursor:pointer;font-weight:bold;display:none;box-shadow:0 4px 15px rgba(220,53,69,0.4)}
+        #backBtn.show{display:flex;align-items:center;gap:8px}
+        
+        #loginPage{min-height:100vh;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);padding:20px;
+        background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a5f4a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+        
+        .l-header{text-align:center;padding:30px 0;position:relative}
+        .l-title{font-size:28px;color:var(--pr);font-weight:bold}
+        .l-sub{color:var(--sec);font-size:15px;margin-top:8px}
+        
+        .about-btn{position:absolute;top:20px;left:20px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--inf),#3dd5f3);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 4px 15px rgba(23,162,184,0.4);display:flex;align-items:center;justify-content:center}
+        
+        .l-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:30px auto}
+        .l-card{background:#fff;border-radius:15px;padding:30px 20px;text-align:center;cursor:pointer;transition:all .3s;border:3px solid transparent;box-shadow:0 5px 20px rgba(0,0,0,0.08)}
+        .l-card:hover{transform:translateY(-8px);box-shadow:0 15px 35px rgba(0,0,0,.15);border-color:var(--pr)}
+        .l-card .ic{width:70px;height:70px;border-radius:50%;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff}
+        .l-card .ic.admin{background:linear-gradient(135deg,#6f42c1,#9d7cd8)}
+        .l-card .ic.judge{background:linear-gradient(135deg,var(--pr),var(--pr-l))}
+        .l-card .ic.school{background:linear-gradient(135deg,var(--sec),#a08060)}
+        .l-card h3{font-size:16px;color:var(--dk);margin-bottom:8px}
+        .l-card button{padding:10px 30px;border:none;border-radius:25px;color:#fff;cursor:pointer;font-weight:bold;font-size:13px}
+        .l-card button.admin{background:linear-gradient(135deg,#6f42c1,#9d7cd8)}
+        .l-card button.judge{background:linear-gradient(135deg,var(--pr),var(--pr-l))}
+        .l-card button.school{background:linear-gradient(135deg,var(--sec),#a08060)}
+        
+        .announcements-container{max-width:1100px;margin:30px auto;background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+        .announcements-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--dan)}
+        .announcements-header h2{color:var(--dan);font-size:20px}
+        .upload-btn{padding:10px 20px;background:linear-gradient(135deg,var(--suc),#34ce57);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;display:flex;align-items:center;gap:8px}
+        
+        .announcements-list{display:grid;gap:15px;max-height:300px;overflow-y:auto;padding:10px}
+        .announcement-item{display:flex;align-items:center;gap:15px;padding:15px;background:var(--g1);border-radius:12px}
+        .announcement-icon{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
+        .announcement-icon.pdf{background:linear-gradient(135deg,#dc3545,#c82333)}
+        .announcement-icon.word{background:linear-gradient(135deg,#2b579a,#1e3f6f)}
+        .announcement-icon.excel{background:linear-gradient(135deg,#217346,#1d5c38)}
+        .announcement-icon.image{background:linear-gradient(135deg,#9c27b0,#7b1fa2)}
+        .announcement-icon.other{background:linear-gradient(135deg,var(--g6),#5a6268)}
+        .announcement-info{flex:1}
+        .announcement-info h4{color:var(--dk);font-size:14px;margin-bottom:5px}
+        .announcement-info p{color:var(--g6);font-size:12px}
+        .announcement-actions{display:flex;gap:8px}
+        .announcement-actions button{width:35px;height:35px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+        .announcement-actions .view-btn{background:#e3f2fd;color:var(--male)}
+        .announcement-actions .download-btn{background:#e8f5e9;color:var(--suc)}
+        .announcement-actions .delete-btn{background:#ffebee;color:var(--dan)}
+        
+        .empty-announcements{text-align:center;padding:40px;color:var(--g6)}
+        .empty-announcements i{font-size:50px;margin-bottom:15px;opacity:0.3}
+        
+        .dash{max-width:1100px;margin:30px auto;background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+        .dash-header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--pr)}
+        .dash-header h2{color:var(--pr);font-size:20px}
+        .st-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+        .st-box{background:linear-gradient(135deg,var(--g1),#fff);border-radius:15px;padding:20px;text-align:center;border:2px solid var(--g2)}
+        .st-box i{font-size:32px;margin-bottom:12px}
+        .st-box h3{font-size:32px;color:var(--dk)}
+        .st-box p{font-size:12px;color:var(--g6)}
+        
+        .results-container{max-width:1100px;margin:30px auto;background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+        .results-header{text-align:center;margin-bottom:25px;padding-bottom:15px;border-bottom:3px solid var(--war)}
+        .results-header h2{color:var(--war);font-size:20px}
+        
+        .gender-sections{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+        .gender-box{border-radius:15px;padding:25px;text-align:center}
+        .gender-box.male{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:3px solid var(--male)}
+        .gender-box.female{background:linear-gradient(135deg,#fce4ec,#f8bbd9);border:3px solid var(--female)}
+        .gender-box h3{font-size:18px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+        .gender-box.male h3{color:var(--male)}
+        .gender-box.female h3{color:var(--female)}
+        
+        .result-btns{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+        .result-btn{padding:15px 25px;border:none;border-radius:12px;cursor:pointer;font-weight:bold;font-size:14px;display:flex;align-items:center;gap:10px;transition:all .3s;min-width:150px;justify-content:center}
+        .result-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+        .result-btn.tilawa{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff}
+        .result-btn.hifz{background:linear-gradient(135deg,var(--suc),#34ce57);color:#fff}
+        
+        .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:5000;backdrop-filter:blur(5px)}
+        .modal.show{display:flex}
+        .modal-c{background:#fff;border-radius:20px;padding:30px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;animation:modalIn .3s}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+        .modal-header{text-align:center;margin-bottom:25px;padding-bottom:15px;border-bottom:2px solid var(--g2)}
+        .modal-t{font-size:20px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--pr)}
+        .modal-close{position:absolute;top:15px;left:15px;background:var(--g2);border:none;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:16px}
+        
+        .about-section{margin-bottom:25px;padding:20px;background:var(--g1);border-radius:15px;border-right:4px solid var(--pr)}
+        .about-section h3{color:var(--pr);font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+        .about-section p{color:var(--dk);line-height:1.8;font-size:14px}
+        .about-section ul{list-style:none;padding:0}
+        .about-section ul li{padding:8px 0;border-bottom:1px dashed var(--g3);display:flex;align-items:center;gap:10px;font-size:14px}
+        .about-section ul li:last-child{border-bottom:none}
+        .about-section ul li i{color:var(--suc);font-size:12px}
+        
+        .timeline{position:relative;padding-right:30px}
+        .timeline::before{content:'';position:absolute;right:10px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--pr),var(--suc))}
+        .timeline-item{position:relative;margin-bottom:20px;padding:15px;background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+        .timeline-item::before{content:'';position:absolute;right:-26px;top:20px;width:12px;height:12px;background:var(--pr);border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 3px var(--pr)}
+        .timeline-item h4{color:var(--pr);font-size:14px;margin-bottom:5px}
+        .timeline-item p{color:var(--g6);font-size:13px}
+        
+        .fg{margin-bottom:18px}
+        .fg label{display:block;margin-bottom:8px;font-weight:bold;color:var(--dk);font-size:13px}
+        .fc{width:100%;padding:12px 15px;border:2px solid var(--g3);border-radius:10px;font-size:14px;transition:all .2s}
+        .fc:focus{outline:none;border-color:var(--pr);box-shadow:0 0 0 3px rgba(26,95,74,0.1)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+        
+        .btn{padding:12px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;gap:8px;font-size:13px;transition:all .2s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+        .btn-pr{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff}
+        .btn-su{background:linear-gradient(135deg,var(--suc),#34ce57);color:#fff}
+        .btn-se{background:var(--g2);color:var(--dk)}
+        .btn-dan{background:linear-gradient(135deg,var(--dan),#c82333);color:#fff}
+        .btn-inf{background:linear-gradient(135deg,var(--inf),#3dd5f3);color:#fff}
+        .btn-purple{background:linear-gradient(135deg,var(--purple),#9d7cd8);color:#fff}
+        .btn-sm{padding:8px 15px;font-size:12px}
+        
+        .info-box{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);padding:15px;border-radius:10px;margin-bottom:20px;font-size:13px;color:#2e7d32;display:flex;align-items:center;gap:12px}
+        .info-box.purple{background:linear-gradient(135deg,#ede7f6,#d1c4e9);color:#5e35b1}
+        .info-box.green{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);color:#2e7d32}
+        
+        /* Password Input Styles */
+        .password-wrapper{position:relative}
+        .password-wrapper .fc{padding-left:45px}
+        .password-toggle{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--g6);cursor:pointer;font-size:16px}
+        .password-toggle:hover{color:var(--pr)}
+        
+        .login-icon{width:80px;height:80px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:35px;color:#fff}
+        .login-icon.admin{background:linear-gradient(135deg,var(--purple),#9d7cd8)}
+        .login-icon.judge{background:linear-gradient(135deg,var(--pr),var(--pr-l))}
+        
+        #mainApp{display:none;min-height:100vh}
+        #mainApp.show{display:flex}
+        
+        .side{width:280px;background:linear-gradient(180deg,var(--pr-d),var(--pr));min-height:100vh;position:fixed;right:0;top:0;box-shadow:-5px 0 20px rgba(0,0,0,0.2)}
+        .side-h{padding:20px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,0.1)}
+        .side-t{color:#fff;font-size:14px;font-weight:bold}
+        .side-menu{padding:20px 0}
+        .m-item{padding:14px 25px;color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;gap:12px;border-right:4px solid transparent;transition:all .2s}
+        .m-item:hover{background:rgba(255,255,255,.1)}
+        .m-item.active{background:rgba(255,255,255,.15);border-right-color:var(--sec)}
+        
+        .u-box{position:fixed;bottom:0;right:0;width:280px;padding:15px 20px;background:rgba(0,0,0,.3);display:flex;align-items:center;gap:12px}
+        .u-av{width:40px;height:40px;background:var(--sec);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+        .u-info{flex:1}
+        .u-name{color:#fff;font-size:13px;font-weight:bold}
+        .u-role{color:rgba(255,255,255,.7);font-size:11px}
+        .logout{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:18px}
+        
+        .main{flex:1;margin-right:280px;background:var(--g1)}
+        .top-bar{background:#fff;padding:20px 30px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+        .pg-title{color:var(--pr);font-size:20px;display:flex;align-items:center;gap:10px}
+        .content{padding:25px}
+        
+        .card{background:#fff;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:25px;overflow:hidden}
+        .card-h{padding:18px 25px;border-bottom:1px solid var(--g2);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,var(--g1),#fff);flex-wrap:wrap;gap:12px}
+        .card-h h3{color:var(--pr);font-size:16px;display:flex;align-items:center;gap:10px}
+        .card-h-btns{display:flex;gap:8px;flex-wrap:wrap}
+        .card-b{padding:25px;overflow-x:auto}
+        
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:12px 10px;border:1px solid var(--g3);text-align:center;font-size:12px}
+        th{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff}
+        tr:nth-child(even){background:var(--g1)}
+        
+        .badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+        .b-inf{background:#d1ecf1;color:#0c5460}
+        .b-suc{background:#d4edda;color:#155724}
+        .b-war{background:#fff3cd;color:#856404}
+        .b-male{background:#e3f2fd;color:#1565c0}
+        .b-female{background:#fce4ec;color:#c2185b}
+        
+        @keyframes goldGlow{0%,100%{background:linear-gradient(90deg,rgba(255,215,0,0.15),rgba(255,215,0,0.4),rgba(255,215,0,0.15));box-shadow:0 0 20px rgba(255,215,0,0.3)}50%{background:linear-gradient(90deg,rgba(255,215,0,0.4),rgba(255,215,0,0.15),rgba(255,215,0,0.4));box-shadow:0 0 30px rgba(255,215,0,0.5)}}
+        @keyframes silverGlow{0%,100%{background:linear-gradient(90deg,rgba(192,192,192,0.15),rgba(192,192,192,0.4),rgba(192,192,192,0.15))}50%{background:linear-gradient(90deg,rgba(192,192,192,0.4),rgba(192,192,192,0.15),rgba(192,192,192,0.4))}}
+        @keyframes bronzeGlow{0%,100%{background:linear-gradient(90deg,rgba(205,127,50,0.15),rgba(205,127,50,0.35),rgba(205,127,50,0.15))}50%{background:linear-gradient(90deg,rgba(205,127,50,0.35),rgba(205,127,50,0.15),rgba(205,127,50,0.35))}}
+        .winner-gold{animation:goldGlow 2s ease-in-out infinite}
+        .winner-gold td:first-child::before{content:'🥇 '}
+        .winner-silver{animation:silverGlow 2.5s ease-in-out infinite}
+        .winner-silver td:first-child::before{content:'🥈 '}
+        .winner-bronze{animation:bronzeGlow 3s ease-in-out infinite}
+        .winner-bronze td:first-child::before{content:'🥉 '}
+        
+        #evalModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);display:none;align-items:flex-start;justify-content:center;z-index:6000;padding:20px;overflow-y:auto}
+        #evalModal.show{display:flex}
+        .eval-box{background:#fff;border-radius:15px;width:100%;max-width:1200px;margin:20px auto}
+        .eval-header{padding:25px;text-align:center;border-radius:15px 15px 0 0}
+        .eval-header.tilawa{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff}
+        .eval-header.hifz{background:linear-gradient(135deg,var(--suc),#34ce57);color:#fff}
+        
+        .eval-rec{background:linear-gradient(135deg,#fce4ec,#f8bbd0);padding:25px;border-bottom:4px solid var(--dan)}
+        .rec-ctrl{display:flex;justify-content:center;gap:15px;margin-bottom:20px}
+        .rec-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;font-size:22px;box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+        .rec-btn:disabled{opacity:0.5;cursor:not-allowed}
+        .rec-btn.rec{background:linear-gradient(135deg,var(--dan),#e53935);color:#fff}
+        .rec-btn.pause{background:linear-gradient(135deg,var(--war),#ffca2c);color:var(--dk)}
+        .rec-btn.stp{background:linear-gradient(135deg,var(--dk),#424242);color:#fff}
+        .rec-btn.sav{background:linear-gradient(135deg,var(--suc),#43a047);color:#fff}
+        .rec-timer{font-size:36px;font-family:monospace;font-weight:bold;color:var(--dan);background:#fff;padding:12px 25px;border-radius:12px}
+        .rec-indicator{display:inline-block;width:14px;height:14px;background:var(--g6);border-radius:50%;margin-left:10px}
+        .rec-indicator.recording{background:var(--dan);animation:blink 1s infinite}
+        .rec-indicator.paused{background:var(--war)}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+        .rec-status{text-align:center;margin-top:10px;font-weight:bold;font-size:14px}
+        
+        .eval-info{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:20px;background:var(--g1);text-align:center}
+        .eval-info label{font-size:10px;color:var(--g6);display:block}
+        .eval-info span{font-weight:bold;font-size:13px}
+        
+        .eval-t{width:100%;border-collapse:collapse;min-width:800px}
+        .eval-t th{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff;padding:10px 8px}
+        .eval-t th.snd{background:#6f42c1}
+        .eval-t th.hfz{background:var(--suc)}
+        .eval-t th.note{background:var(--sec)}
+        .ev-inp{width:50px;padding:8px;border:2px solid var(--g3);border-radius:6px;text-align:center;font-weight:bold}
+        .ev-note{width:100%;padding:8px;border:2px solid var(--g3);border-radius:6px;font-size:11px;resize:none;height:35px}
+        .sc-c{font-weight:bold;font-size:16px;color:var(--pr)}
+        
+        .eval-footer{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px;background:var(--g1)}
+        .avg-box{background:linear-gradient(135deg,var(--sec),#a08060);color:#fff;padding:25px;border-radius:15px;text-align:center}
+        .avg-box h4{margin-bottom:10px}
+        .avg-box .score{font-size:48px;font-weight:bold}
+        .notes-box{background:#fff;padding:20px;border-radius:15px;border:2px solid var(--g3)}
+        .notes-box h4{margin-bottom:10px;color:var(--dk);font-size:14px}
+        .notes-box textarea{width:100%;height:100px;padding:12px;border:2px solid var(--g3);border-radius:10px;font-size:13px;resize:none}
+        
+        .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+        .tab-b{padding:12px 25px;border:none;background:var(--g2);border-radius:10px;cursor:pointer;font-weight:bold}
+        .tab-b.active{background:linear-gradient(135deg,var(--pr),var(--pr-l));color:#fff}
+        
+        .empty{text-align:center;padding:40px;color:var(--g6)}
+        .empty i{font-size:50px;margin-bottom:15px;opacity:0.5}
+        
+        .upload-area{border:3px dashed var(--g3);border-radius:15px;padding:40px;text-align:center;cursor:pointer;margin-bottom:20px}
+        .upload-area:hover{border-color:var(--pr);background:rgba(26,95,74,0.05)}
+        .upload-area.dragover{border-color:var(--suc);background:rgba(40,167,69,0.1)}
+        .upload-area i{font-size:50px;color:var(--g6);margin-bottom:15px}
+        .upload-area h4{color:var(--dk);margin-bottom:10px}
+        .upload-area p{color:var(--g6);font-size:13px}
+        
+        @media(max-width:992px){.side,.u-box{display:none}.main{margin-right:0}.l-cards,.st-row,.gender-sections,.eval-footer{grid-template-columns:1fr}}
+        @media(max-width:576px){.form-row{grid-template-columns:1fr}.result-btns{flex-direction:column}}
+    </style>
+</head>
+<body>
+
+<button id="backBtn" onclick="goHome()"><i class="fas fa-home"></i> الرئيسية</button>
+
+<!-- صفحة الدخول -->
+<div id="loginPage">
+    <div class="l-header">
+        <button class="about-btn" onclick="openModal('aboutModal')" title="عن النظام"><i class="fas fa-info"></i></button>
+        <h1 class="l-title"><i class="fas fa-quran"></i> مسابقة القرآن الكريم</h1>
+        <p class="l-sub">المديرية العامة للتربية والتعليم بمحافظة مسقط</p>
+    </div>
+
+    <div class="l-cards">
+        <div class="l-card" onclick="openAdminLogin()">
+            <div class="ic admin"><i class="fas fa-user-shield"></i></div>
+            <h3>المشرف العام</h3>
+            <button class="admin">دخول</button>
+        </div>
+        <div class="l-card" onclick="openJudgeLogin()">
+            <div class="ic judge"><i class="fas fa-user-tie"></i></div>
+            <h3>لجان التحكيم</h3>
+            <button class="judge">دخول</button>
+        </div>
+        <div class="l-card" onclick="openSchoolReg()">
+            <div class="ic school"><i class="fas fa-school"></i></div>
+            <h3>تسجيل المدارس</h3>
+            <button class="school">تسجيل</button>
+        </div>
+    </div>
+
+    <!-- حاوية الإعلانات -->
+    <div class="announcements-container">
+        <div class="announcements-header">
+            <h2><i class="fas fa-bullhorn"></i> إعلانات المسابقة</h2>
+            <button class="upload-btn" onclick="openModal('uploadModal')"><i class="fas fa-cloud-upload-alt"></i> رفع ملف</button>
+        </div>
+        <div class="announcements-list" id="announcementsList">
+            <div class="empty-announcements"><i class="fas fa-folder-open"></i><p>لا توجد إعلانات حالياً</p></div>
+        </div>
+    </div>
+
+    <!-- إحصائيات المسابقة -->
+    <div class="dash">
+        <div class="dash-header"><h2><i class="fas fa-chart-bar"></i> إحصائيات المسابقة</h2></div>
+        <div class="st-row">
+            <div class="st-box"><i class="fas fa-school" style="color:var(--sec)"></i><h3 id="stat1">0</h3><p>المدارس</p></div>
+            <div class="st-box"><i class="fas fa-users" style="color:var(--inf)"></i><h3 id="stat2">0</h3><p>المتسابقين</p></div>
+            <div class="st-box"><i class="fas fa-book-reader" style="color:var(--pr)"></i><h3 id="stat3">0</h3><p>التلاوة</p></div>
+            <div class="st-box"><i class="fas fa-brain" style="color:var(--suc)"></i><h3 id="stat4">0</h3><p>الحفظ</p></div>
+        </div>
+    </div>
+
+    <!-- أوائل المتسابقين -->
+    <div class="results-container">
+        <div class="results-header"><h2><i class="fas fa-trophy"></i> أوائل المتسابقين</h2></div>
+        <div class="gender-sections">
+            <div class="gender-box male">
+                <h3><i class="fas fa-male"></i> نتائج الذكور</h3>
+                <div class="result-btns">
+                    <button class="result-btn tilawa" onclick="showTopResults('male','tilawa')"><i class="fas fa-book-reader"></i> التلاوة</button>
+                    <button class="result-btn hifz" onclick="showTopResults('male','hifz')"><i class="fas fa-brain"></i> الحفظ</button>
+                </div>
+            </div>
+            <div class="gender-box female">
+                <h3><i class="fas fa-female"></i> نتائج الإناث</h3>
+                <div class="result-btns">
+                    <button class="result-btn tilawa" onclick="showTopResults('female','tilawa')"><i class="fas fa-book-reader"></i> التلاوة</button>
+                    <button class="result-btn hifz" onclick="showTopResults('female','hifz')"><i class="fas fa-brain"></i> الحفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة دخول المشرف العام -->
+<div class="modal" id="adminLoginModal">
+    <div class="modal-c" style="max-width:450px">
+        <div class="modal-header">
+            <div class="login-icon admin"><i class="fas fa-user-shield"></i></div>
+            <h3 class="modal-t" style="color:var(--purple)"><i class="fas fa-lock"></i> دخول المشرف العام</h3>
+        </div>
+        <div class="info-box purple">
+            <i class="fas fa-shield-alt" style="font-size:20px"></i>
+            <span>هذه المنطقة محمية وتتطلب كلمة مرور للدخول</span>
+        </div>
+        <div class="fg">
+            <label><i class="fas fa-key"></i> كلمة المرور</label>
+            <div class="password-wrapper">
+                <input type="password" class="fc" id="adminPass" placeholder="أدخل كلمة المرور" onkeypress="if(event.key==='Enter')adminLogin()">
+                <button type="button" class="password-toggle" onclick="togglePassword('adminPass', this)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px">
+            <button class="btn btn-purple" onclick="adminLogin()" style="flex:1"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button class="btn btn-se" onclick="closeModal('adminLoginModal')">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة دخول المحكم -->
+<div class="modal" id="judgeModal">
+    <div class="modal-c" style="max-width:500px">
+        <div class="modal-header">
+            <div class="login-icon judge"><i class="fas fa-user-tie"></i></div>
+            <h3 class="modal-t"><i class="fas fa-gavel"></i> دخول لجنة التحكيم</h3>
+        </div>
+        <div class="fg"><label><i class="fas fa-trophy"></i> نوع المسابقة</label>
+            <select class="fc" id="jCompType" onchange="loadJudges()">
+                <option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option>
+            </select>
+        </div>
+        <div class="fg"><label><i class="fas fa-user"></i> اختر اسمك</label>
+            <select class="fc" id="jName" disabled><option value="">-- اختر المسابقة أولاً --</option></select>
+        </div>
+        <div class="fg">
+            <label><i class="fas fa-key"></i> كلمة المرور</label>
+            <div class="password-wrapper">
+                <input type="password" class="fc" id="jPass" placeholder="أدخل كلمة المرور" onkeypress="if(event.key==='Enter')judgeLogin()">
+                <button type="button" class="password-toggle" onclick="togglePassword('jPass', this)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        <div class="info-box green"><i class="fas fa-info-circle"></i> كلمة المرور للمحكمين: <strong>123</strong></div>
+        <div style="display:flex;gap:12px">
+            <button class="btn btn-pr" onclick="judgeLogin()" style="flex:1"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button class="btn btn-se" onclick="closeModal('judgeModal')">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة التعريف بالنظام -->
+<div class="modal" id="aboutModal">
+    <div class="modal-c" style="max-width:800px;position:relative">
+        <button class="modal-close" onclick="closeModal('aboutModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-header"><h3 class="modal-t"><i class="fas fa-info-circle"></i> التعريف بالنظام</h3></div>
+        
+        <div class="about-section">
+            <h3><i class="fas fa-bullseye"></i> رؤية النظام</h3>
+            <p>أن يكون النظام الرائد في إدارة مسابقات القرآن الكريم على مستوى السلطنة.</p>
+        </div>
+        
+        <div class="about-section">
+            <h3><i class="fas fa-rocket"></i> رسالة النظام</h3>
+            <p>تقديم منصة إلكترونية متكاملة لإدارة مسابقات القرآن الكريم تضمن الدقة والشفافية.</p>
+        </div>
+        
+        <div class="about-section">
+            <h3><i class="fas fa-flag"></i> أهداف النظام</h3>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> أتمتة عملية تسجيل المتسابقين</li>
+                <li><i class="fas fa-check-circle"></i> توفير آلية تقييم عادلة وشفافة</li>
+                <li><i class="fas fa-check-circle"></i> تسهيل عملية التحكيم وتوحيد المعايير</li>
+                <li><i class="fas fa-check-circle"></i> إصدار النتائج والتقارير بشكل فوري</li>
+                <li><i class="fas fa-check-circle"></i> توثيق التسجيلات الصوتية للمتسابقين</li>
+            </ul>
+        </div>
+        
+        <div class="about-section">
+            <h3><i class="fas fa-history"></i> المراحل التطويرية</h3>
+            <div class="timeline">
+                <div class="timeline-item"><h4>المرحلة الأولى</h4><p>إنشاء الهيكل الأساسي للنظام</p></div>
+                <div class="timeline-item"><h4>المرحلة الثانية</h4><p>نظام تسجيل المتسابقين</p></div>
+                <div class="timeline-item"><h4>المرحلة الثالثة</h4><p>استمارات التقييم الإلكترونية</p></div>
+                <div class="timeline-item"><h4>المرحلة الرابعة</h4><p>التسجيل الصوتي</p></div>
+                <div class="timeline-item"><h4>المرحلة الخامسة</h4><p>نظام النتائج والتقارير</p></div>
+                <div class="timeline-item"><h4>المرحلة السادسة</h4><p>نظام الإعلانات</p></div>
+            </div>
+        </div>
+        
+        <div style="text-align:center;padding:20px;background:var(--g1);border-radius:10px">
+            <p style="color:var(--g6)"><i class="fas fa-code"></i> الإصدار <strong style="color:var(--pr)">2.0</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة رفع الملفات -->
+<div class="modal" id="uploadModal">
+    <div class="modal-c" style="max-width:600px;position:relative">
+        <button class="modal-close" onclick="closeModal('uploadModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-header"><h3 class="modal-t"><i class="fas fa-cloud-upload-alt"></i> رفع إعلان جديد</h3></div>
+        <div class="fg"><label><i class="fas fa-heading"></i> عنوان الإعلان</label><input type="text" class="fc" id="announcementTitle" placeholder="أدخل عنوان الإعلان"></div>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" 
+             ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h4>اسحب الملف هنا أو اضغط للاختيار</h4>
+            <p>PDF, Word, Excel, صور</p>
+        </div>
+        <input type="file" id="fileInput" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif" onchange="handleFileSelect(event)">
+        <div id="selectedFile" style="display:none;padding:15px;background:var(--g1);border-radius:10px;margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:15px">
+                <div id="fileIcon" class="announcement-icon"></div>
+                <div style="flex:1"><h4 id="fileName" style="color:var(--dk)"></h4><p id="fileSize" style="color:var(--g6);font-size:12px"></p></div>
+                <button onclick="clearSelectedFile()" style="background:none;border:none;color:var(--dan);cursor:pointer;font-size:18px"><i class="fas fa-times-circle"></i></button>
+            </div>
+        </div>
+        <div style="display:flex;gap:12px">
+            <button class="btn btn-su" onclick="uploadAnnouncement()" style="flex:1"><i class="fas fa-upload"></i> رفع</button>
+            <button class="btn btn-se" onclick="closeModal('uploadModal')">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة عرض النتائج -->
+<div class="modal" id="topResultsModal">
+    <div class="modal-c" style="position:relative">
+        <button class="modal-close" onclick="closeModal('topResultsModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-header"><h3 class="modal-t" id="topResultsTitle"></h3></div>
+        <div id="topResultsContent"></div>
+    </div>
+</div>
+
+<!-- نافذة تسجيل الطلاب -->
+<div class="modal" id="schoolRegModal">
+    <div class="modal-c">
+        <div class="modal-header"><h3 class="modal-t"><i class="fas fa-user-plus"></i> تسجيل متسابق</h3></div>
+        <form id="regForm" onsubmit="submitReg(event)">
+            <div class="form-row">
+                <div class="fg"><label>اسم الطالب</label><input type="text" class="fc" id="regName" required placeholder="الاسم الرباعي"></div>
+                <div class="fg"><label>الجنس</label><select class="fc" id="regGender" required><option value="">-- اختر --</option><option value="male">ذكر</option><option value="female">أنثى</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="fg"><label>الصف</label>
+                    <select class="fc" id="regGrade" required>
+                        <option value="">-- اختر --</option><option value="تعليم مبكر">تعليم مبكر</option>
+                        <option value="الأول">الأول</option><option value="الثاني">الثاني</option><option value="الثالث">الثالث</option>
+                        <option value="الرابع">الرابع</option><option value="الخامس">الخامس</option><option value="السادس">السادس</option>
+                        <option value="السابع">السابع</option><option value="الثامن">الثامن</option><option value="التاسع">التاسع</option>
+                        <option value="العاشر">العاشر</option><option value="الحادي عشر">الحادي عشر</option><option value="الثاني عشر">الثاني عشر</option>
+                    </select>
+                </div>
+                <div class="fg"><label>المدرسة</label><input type="text" class="fc" id="regSchool" required></div>
+            </div>
+            <div class="form-row">
+                <div class="fg"><label>الولاية</label>
+                    <select class="fc" id="regWilayat" required>
+                        <option value="">-- اختر --</option><option value="مسقط">مسقط</option><option value="مطرح">مطرح</option>
+                        <option value="بوشر">بوشر</option><option value="السيب">السيب</option><option value="العامرات">العامرات</option><option value="قريات">قريات</option>
+                    </select>
+                </div>
+                <div class="fg"><label>الجنسية</label><select class="fc" id="regNat" required><option value="">-- اختر --</option><option value="عماني">عماني</option><option value="غير عماني">غير عماني</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="fg"><label>نوع المسابقة</label>
+                    <select class="fc" id="regComp" required onchange="updateLevels()">
+                        <option value="">-- اختر --</option><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option>
+                    </select>
+                </div>
+                <div class="fg"><label>المستوى</label><select class="fc" id="regLevel" required><option value="">-- اختر المسابقة أولاً --</option></select></div>
+            </div>
+            <div class="fg"><label>الأجزاء المشارك بها</label><input type="text" class="fc" id="regParts" required placeholder="مثال: من جزء عم إلى جزء تبارك"></div>
+            <div class="form-row">
+                <div class="fg"><label>اسم المشرف</label><input type="text" class="fc" id="regSupName" required></div>
+                <div class="fg"><label>رقم المشرف</label><input type="tel" class="fc" id="regSupPhone" required></div>
+            </div>
+            <div class="fg"><label>هاتف المدرسة</label><input type="tel" class="fc" id="regSchPhone" required></div>
+            <div style="display:flex;gap:12px;margin-top:20px">
+                <button type="submit" class="btn btn-su" style="flex:1"><i class="fas fa-save"></i> حفظ</button>
+                <button type="button" class="btn btn-se" onclick="closeModal('schoolRegModal')">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- نافذة إضافة محكم -->
+<div class="modal" id="addJudgeModal">
+    <div class="modal-c" style="max-width:500px">
+        <div class="modal-header"><h3 class="modal-t"><i class="fas fa-user-plus"></i> إضافة محكم</h3></div>
+        <div class="fg"><label>الاسم</label><input type="text" class="fc" id="newJName"></div>
+        <div class="fg"><label>نوع المسابقة</label><select class="fc" id="newJSpec"><option value="hifz">الحفظ</option><option value="tilawa">التلاوة</option></select></div>
+        <div class="fg"><label>نوع اللجنة</label><select class="fc" id="newJCommittee"><option value="ذكور">ذكور</option><option value="إناث">إناث</option></select></div>
+        <div class="fg"><label>الدور</label><select class="fc" id="newJRole"><option value="member">عضو</option><option value="lead">رئيس</option></select></div>
+        <div style="display:flex;gap:12px">
+            <button class="btn btn-su" onclick="saveJudge()" style="flex:1">حفظ</button>
+            <button class="btn btn-se" onclick="closeModal('addJudgeModal')">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- التطبيق -->
+<div id="mainApp">
+    <aside class="side">
+        <div class="side-h"><div class="side-t"><i class="fas fa-quran"></i> مسابقة القرآن الكريم<br>محافظة مسقط</div></div>
+        <nav class="side-menu" id="sideMenu"></nav>
+    </aside>
+    <div class="u-box">
+        <div class="u-av"><i class="fas fa-user"></i></div>
+        <div class="u-info"><div class="u-name" id="userName">-</div><div class="u-role" id="userRole">-</div></div>
+        <button class="logout" onclick="goHome()"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+    <main class="main">
+        <div class="top-bar"><h1 class="pg-title" id="pageTitle"></h1></div>
+        <div class="content" id="pageContent"></div>
+    </main>
+</div>
+
+<!-- التقييم -->
+<div id="evalModal"><div class="eval-box" id="evalBox"></div></div>
+
+<script>
+// ========== البيانات ==========
+const DB = {
+    user: null,
+    adminPass: '12345',  // كلمة سر المشرف العام
+    judgePass: '123',    // كلمة سر المحكمين
+    approved: false,
+    judges: [],
+    students: [],
+    announcements: [],
+    curStudent: null,
+    selectedFile: null,
+    rec: {active:false, paused:false, timer:null, time:0, chunks:[], recorder:null, url:null, stream:null}
+};
+
+const HIFZ_LVS = {
+    'متميز':{name:'المتميز (10 أجزاء)',q:8}, 'أول':{name:'الأول (5 أجزاء)',q:5},
+    'ثاني':{name:'الثاني (4 أجزاء)',q:4}, 'ثالث':{name:'الثالث (3 أجزاء)',q:3},
+    'رابع':{name:'الرابع (جزءان)',q:3}, 'خامس':{name:'الخامس (جزء)',q:3}
+};
+
+const TILAWA_LVS = {
+    'أول':{name:'الأول (4 أجزاء)',q:4}, 'ثاني':{name:'الثاني (3 أجزاء)',q:3}, 'ثالث':{name:'الثالث (جزءان)',q:2}
+};
+
+// ========== التهيئة ==========
+document.addEventListener('DOMContentLoaded', () => { updateStats(); renderAnnouncements(); });
+
+function updateStats() {
+    document.getElementById('stat1').textContent = [...new Set(DB.students.map(s => s.school))].length;
+    document.getElementById('stat2').textContent = DB.students.length;
+    document.getElementById('stat3').textContent = DB.students.filter(s => s.comp === 'tilawa').length;
+    document.getElementById('stat4').textContent = DB.students.filter(s => s.comp === 'hifz').length;
+}
+
+// ========== إظهار/إخفاء كلمة المرور ==========
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+// ========== دخول المشرف العام ==========
+function openAdminLogin() {
+    document.getElementById('adminPass').value = '';
+    openModal('adminLoginModal');
+    setTimeout(() => document.getElementById('adminPass').focus(), 300);
+}
+
+function adminLogin() {
+    const pass = document.getElementById('adminPass').value;
+    if (pass === DB.adminPass) {
+        closeModal('adminLoginModal');
+        DB.user = {role: 'admin', name: 'المشرف العام'};
+        enterApp();
+    } else {
+        alert('❌ كلمة المرور غير صحيحة!\n\nتأكد من إدخال كلمة المرور الصحيحة.');
+        document.getElementById('adminPass').value = '';
+        document.getElementById('adminPass').focus();
+    }
+}
+
+// ========== دخول المحكم ==========
+function openJudgeLogin() {
+    document.getElementById('jCompType').value = '';
+    document.getElementById('jName').innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>';
+    document.getElementById('jName').disabled = true;
+    document.getElementById('jPass').value = '';
+    openModal('judgeModal');
+}
+
+function loadJudges() {
+    const comp = document.getElementById('jCompType').value;
+    const sel = document.getElementById('jName');
+    if (!comp) { sel.innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>'; sel.disabled = true; return; }
+    const judges = DB.judges.filter(j => j.spec === comp);
+    if (!judges.length) { sel.innerHTML = '<option value="">لا يوجد محكمين</option>'; sel.disabled = true; return; }
+    sel.innerHTML = '<option value="">-- اختر اسمك --</option>' + judges.map(j => `<option value="${j.id}">${j.name} ${j.isLead?'⭐':''} (${j.committee})</option>`).join('');
+    sel.disabled = false;
+}
+
+function judgeLogin() {
+    const id = parseInt(document.getElementById('jName').value);
+    const pass = document.getElementById('jPass').value;
+    if (!id) { alert('اختر اسمك من القائمة'); return; }
+    if (pass !== DB.judgePass) {
+        alert('❌ كلمة المرور غير صحيحة!\n\nكلمة المرور الصحيحة: 123');
+        document.getElementById('jPass').value = '';
+        document.getElementById('jPass').focus();
+        return;
+    }
+    const j = DB.judges.find(x => x.id === id);
+    closeModal('judgeModal');
+    DB.user = {role:'judge', id:j.id, name:j.name, spec:j.spec, isLead:j.isLead, committee:j.committee};
+    enterApp();
+}
+
+// ========== باقي الدوال ==========
+function openSchoolReg() { document.getElementById('regForm').reset(); document.getElementById('regLevel').innerHTML='<option value="">-- اختر المسابقة أولاً --</option>'; openModal('schoolRegModal'); }
+
+function updateLevels() {
+    const comp = document.getElementById('regComp').value;
+    const sel = document.getElementById('regLevel');
+    if (!comp) { sel.innerHTML = '<option value="">-- اختر المسابقة أولاً --</option>'; return; }
+    const lvs = comp === 'hifz' ? HIFZ_LVS : TILAWA_LVS;
+    sel.innerHTML = '<option value="">-- اختر --</option>' + Object.keys(lvs).map(k => `<option value="${k}">${lvs[k].name}</option>`).join('');
+}
+
+function submitReg(e) {
+    e.preventDefault();
+    DB.students.push({
+        id: Date.now(), name: document.getElementById('regName').value, gender: document.getElementById('regGender').value,
+        grade: document.getElementById('regGrade').value, school: document.getElementById('regSchool').value,
+        wilayat: document.getElementById('regWilayat').value, nat: document.getElementById('regNat').value,
+        comp: document.getElementById('regComp').value, level: document.getElementById('regLevel').value,
+        parts: document.getElementById('regParts').value, supName: document.getElementById('regSupName').value,
+        supPhone: document.getElementById('regSupPhone').value, schPhone: document.getElementById('regSchPhone').value,
+        evals: [], rec: null
+    });
+    closeModal('schoolRegModal'); updateStats(); alert('✅ تم التسجيل بنجاح!');
+}
+
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function enterApp() {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('mainApp').classList.add('show');
+    document.getElementById('backBtn').classList.add('show');
+    document.getElementById('userName').textContent = DB.user.name;
+    document.getElementById('userRole').textContent = DB.user.role === 'admin' ? 'مشرف عام' : 'محكم';
+    buildMenu(); loadPage(DB.user.role === 'admin' ? 'dashboard' : 'judging');
+}
+
+function goHome() {
+    DB.user = null; stopRecording();
+    document.getElementById('loginPage').style.display = 'block';
+    document.getElementById('mainApp').classList.remove('show');
+    document.getElementById('backBtn').classList.remove('show');
+    updateStats();
+}
+
+function buildMenu() {
+    document.getElementById('sideMenu').innerHTML = DB.user.role === 'admin' ?
+        `<div class="m-item active" onclick="loadPage('dashboard',this)"><i class="fas fa-home"></i> لوحة التحكم</div>
+         <div class="m-item" onclick="loadPage('students',this)"><i class="fas fa-users"></i> المتسابقين</div>
+         <div class="m-item" onclick="loadPage('judges',this)"><i class="fas fa-user-tie"></i> المحكمين</div>
+         <div class="m-item" onclick="loadPage('results',this)"><i class="fas fa-trophy"></i> النتائج</div>` :
+        `<div class="m-item active" onclick="loadPage('judging',this)"><i class="fas fa-clipboard-check"></i> التقييم</div>
+         <div class="m-item" onclick="loadPage('myevals',this)"><i class="fas fa-list-check"></i> تقييماتي</div>`;
+}
+
+function loadPage(pg, el) {
+    if (el) { document.querySelectorAll('.m-item').forEach(m => m.classList.remove('active')); el.classList.add('active'); }
+    document.getElementById('pageTitle').innerHTML = {dashboard:'لوحة التحكم',students:'المتسابقين',judges:'المحكمين',results:'النتائج',judging:'التقييم',myevals:'تقييماتي'}[pg];
+    const c = document.getElementById('pageContent');
+    c.innerHTML = pg==='dashboard'?pgDash():pg==='students'?pgStudents():pg==='judges'?pgJudges():pg==='results'?pgResults():pg==='judging'?pgJudging():pgMyEvals();
+}
+
+function pgDash() {
+    return `<div class="card" id="dashboardCard"><div class="card-h"><h3><i class="fas fa-chart-pie"></i> الإحصائيات</h3>
+        <button class="btn btn-dan btn-sm" onclick="downloadDashPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>
+        <div class="card-b"><div class="st-row">
+            <div class="st-box"><i class="fas fa-school" style="color:var(--sec)"></i><h3>${[...new Set(DB.students.map(s=>s.school))].length}</h3><p>المدارس</p></div>
+            <div class="st-box"><i class="fas fa-users" style="color:var(--inf)"></i><h3>${DB.students.length}</h3><p>المتسابقين</p></div>
+            <div class="st-box"><i class="fas fa-male" style="color:var(--male)"></i><h3>${DB.students.filter(s=>s.gender==='male').length}</h3><p>ذكور</p></div>
+            <div class="st-box"><i class="fas fa-female" style="color:var(--female)"></i><h3>${DB.students.filter(s=>s.gender==='female').length}</h3><p>إناث</p></div>
+        </div></div></div>`;
+}
+
+function pgStudents() {
+    const lvs = s => s.comp==='hifz'?HIFZ_LVS:TILAWA_LVS;
+    let r = DB.students.map((s,i) => `<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td>
+        <td>${s.grade}</td><td>${s.school}</td><td><span class="badge b-${s.comp==='hifz'?'suc':'inf'}">${s.comp==='hifz'?'حفظ':'تلاوة'}</span></td>
+        <td>${lvs(s)[s.level]?.name||s.level}</td><td>${s.evals.length?(s.evals.reduce((a,b)=>a+b.score,0)/s.evals.length).toFixed(1):'-'}</td>
+        <td><button class="btn btn-dan btn-sm" onclick="delSt(${s.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-users"></i> المتسابقين (${DB.students.length})</h3>
+        <button class="btn btn-inf btn-sm" onclick="dlData()"><i class="fas fa-download"></i> Excel</button></div>
+        <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>الجنس</th><th>الصف</th><th>المدرسة</th><th>المسابقة</th><th>المستوى</th><th>الدرجة</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-users"></i><p>لا يوجد متسابقين</p></div>'}</div></div>`;
+}
+
+function pgJudges() {
+    let r = DB.judges.map((j,i) => `<tr><td>${i+1}</td><td>${j.name}</td><td><span class="badge b-${j.spec==='hifz'?'suc':'inf'}">${j.spec==='hifz'?'حفظ':'تلاوة'}</span></td>
+        <td><span class="badge b-${j.committee==='ذكور'?'male':'female'}">${j.committee}</span></td><td>${j.isLead?'⭐ رئيس':'عضو'}</td>
+        <td><button class="btn btn-dan btn-sm" onclick="delJ(${j.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-user-tie"></i> المحكمين (${DB.judges.length})</h3>
+        <button class="btn btn-su btn-sm" onclick="openModal('addJudgeModal')"><i class="fas fa-plus"></i> إضافة</button></div>
+        <div class="card-b"><div class="info-box green"><i class="fas fa-key"></i> كلمة مرور المحكمين: <strong>123</strong></div>
+        ${DB.judges.length?`<table><thead><tr><th>#</th><th>الاسم</th><th>المسابقة</th><th>اللجنة</th><th>الدور</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-user-tie"></i><p>لا يوجد محكمين</p></div>'}</div></div>`;
+}
+
+function pgResults() {
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-trophy"></i> النتائج ${DB.approved?'<span class="badge b-suc">معتمدة</span>':''}</h3>
+        <div class="card-h-btns">${!DB.approved?'<button class="btn btn-su btn-sm" onclick="approve()"><i class="fas fa-check"></i> اعتماد</button>':
+        '<button class="btn btn-inf btn-sm" onclick="dlRes()"><i class="fas fa-file-excel"></i> Excel</button><button class="btn btn-dan btn-sm" onclick="dlResPDF()"><i class="fas fa-file-pdf"></i> PDF</button>'}</div></div>
+        <div class="card-b"><div class="tabs">
+            <button class="tab-b active" onclick="showResTab('male-hifz',this)">ذكور-حفظ</button>
+            <button class="tab-b" onclick="showResTab('male-tilawa',this)">ذكور-تلاوة</button>
+            <button class="tab-b" onclick="showResTab('female-hifz',this)">إناث-حفظ</button>
+            <button class="tab-b" onclick="showResTab('female-tilawa',this)">إناث-تلاوة</button>
+        </div><div id="resContent">${buildResTable('male','hifz')}</div></div></div>`;
+}
+
+function showResTab(key,btn) { document.querySelectorAll('.tab-b').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const[g,c]=key.split('-'); document.getElementById('resContent').innerHTML=buildResTable(g,c); }
+
+function buildResTable(gender,comp) {
+    const lvs = comp==='hifz'?HIFZ_LVS:TILAWA_LVS; let html='', hasData=false;
+    Object.keys(lvs).forEach(lv => {
+        const sts = DB.students.filter(s=>s.comp===comp&&s.gender===gender&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg);
+        if(sts.length) { hasData=true; html+=`<h5 style="margin:20px 0 10px;color:var(--sec)">${lvs[lv].name}</h5><table><thead><tr><th>#</th><th>الاسم</th><th>الصف</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>`;
+            sts.forEach((s,i)=>html+=`<tr class="${DB.approved?(i<3?['winner-gold','winner-silver','winner-bronze'][i]:''):''}"><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td><td><strong>${s.avg.toFixed(1)}</strong></td></tr>`);
+            html+='</tbody></table>'; }
+    });
+    return hasData?html:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';
+}
+
+function pgJudging() {
+    const pend = DB.students.filter(s=>s.comp===DB.user.spec&&!s.evals.some(e=>e.jid===DB.user.id));
+    const lvs = DB.user.spec==='hifz'?HIFZ_LVS:TILAWA_LVS;
+    let r = pend.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td><span class="badge b-${s.gender==='male'?'male':'female'}">${s.gender==='male'?'ذكر':'أنثى'}</span></td>
+        <td>${lvs[s.level]?.name||s.level}</td><td>${s.parts}</td><td><button class="btn btn-pr btn-sm" onclick="openEval(${s.id})"><i class="fas fa-clipboard-check"></i> تقييم</button></td></tr>`).join('');
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-clipboard-check"></i> المتسابقين (${pend.length})</h3></div>
+        <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>الجنس</th><th>المستوى</th><th>الأجزاء</th><th>إجراء</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty"><i class="fas fa-check-circle" style="color:var(--suc)"></i><p>تم تقييم الجميع!</p></div>'}</div></div>`;
+}
+
+function pgMyEvals() {
+    let r='',cnt=0; DB.students.forEach(s=>{const ev=s.evals.find(e=>e.jid===DB.user.id);if(ev){cnt++;r+=`<tr><td>${cnt}</td><td>${s.name}</td><td>${s.school}</td><td><strong>${ev.score.toFixed(1)}</strong></td></tr>`;}});
+    return `<div class="card"><div class="card-h"><h3><i class="fas fa-list-check"></i> تقييماتي (${cnt})</h3></div>
+        <div class="card-b">${r?`<table><thead><tr><th>#</th><th>الاسم</th><th>المدرسة</th><th>الدرجة</th></tr></thead><tbody>${r}</tbody></table>`:'<div class="empty">لا توجد تقييمات</div>'}</div></div>`;
+}
+
+// ========== الوظائف المساعدة ==========
+function saveJudge() {
+    const n = document.getElementById('newJName').value.trim(); if(!n)return alert('أدخل الاسم');
+    DB.judges.push({id:Date.now(),name:n,spec:document.getElementById('newJSpec').value,committee:document.getElementById('newJCommittee').value,isLead:document.getElementById('newJRole').value==='lead'});
+    closeModal('addJudgeModal'); loadPage('judges'); alert('✅ تم إضافة المحكم!');
+}
+
+function delJ(id) { if(confirm('حذف؟')){DB.judges=DB.judges.filter(j=>j.id!==id);loadPage('judges');}}
+function delSt(id) { if(confirm('حذف؟')){DB.students=DB.students.filter(s=>s.id!==id);loadPage('students');updateStats();}}
+function approve() { if(confirm('اعتماد النتائج؟')){DB.approved=true;loadPage('results');alert('✅ تم الاعتماد!');}}
+
+async function downloadDashPDF() { const{jsPDF}=window.jspdf;const c=await html2canvas(document.getElementById('dashboardCard'),{scale:2});const p=new jsPDF('p','mm','a4');p.addImage(c.toDataURL('image/png'),'PNG',10,10,190,0);p.save('لوحة_التحكم.pdf');}
+
+function dlData() {
+    const d=DB.students.map(s=>({'الاسم':s.name,'الجنس':s.gender==='male'?'ذكر':'أنثى','الصف':s.grade,'المدرسة':s.school,'المسابقة':s.comp==='hifz'?'حفظ':'تلاوة','المستوى':s.level}));
+    const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'المتسابقين');XLSX.writeFile(wb,'المتسابقين.xlsx');
+}
+
+function dlRes() {
+    let d=[];['male','female'].forEach(g=>['hifz','tilawa'].forEach(c=>{const lvs=c==='hifz'?HIFZ_LVS:TILAWA_LVS;Object.keys(lvs).forEach(lv=>{
+        DB.students.filter(s=>s.comp===c&&s.gender===g&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg)
+        .forEach((s,i)=>d.push({'الجنس':g==='male'?'ذكر':'أنثى','المسابقة':c==='hifz'?'حفظ':'تلاوة','المستوى':lvs[lv].name,'الترتيب':i+1,'الاسم':s.name,'الدرجة':s.avg.toFixed(1)}));
+    });}));
+    const ws=XLSX.utils.json_to_sheet(d);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'النتائج');XLSX.writeFile(wb,'النتائج.xlsx');
+}
+
+async function dlResPDF() { const{jsPDF}=window.jspdf;const c=await html2canvas(document.getElementById('resContent'),{scale:2});const p=new jsPDF('p','mm','a4');p.addImage(c.toDataURL('image/png'),'PNG',10,10,190,0);p.save('النتائج.pdf');}
+
+// ========== الإعلانات ==========
+function getFileType(f){const e=f.split('.').pop().toLowerCase();return['pdf'].includes(e)?'pdf':['doc','docx'].includes(e)?'word':['xls','xlsx'].includes(e)?'excel':['jpg','jpeg','png','gif'].includes(e)?'image':'other';}
+function getFileIcon(t){return{'pdf':'<i class="fas fa-file-pdf"></i>','word':'<i class="fas fa-file-word"></i>','excel':'<i class="fas fa-file-excel"></i>','image':'<i class="fas fa-file-image"></i>','other':'<i class="fas fa-file"></i>'}[t]||'<i class="fas fa-file"></i>';}
+function formatFileSize(b){return b<1024?b+' B':b<1024*1024?(b/1024).toFixed(1)+' KB':(b/(1024*1024)).toFixed(1)+' MB';}
+function handleDragOver(e){e.preventDefault();document.getElementById('uploadArea').classList.add('dragover');}
+function handleDragLeave(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');}
+function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');if(e.dataTransfer.files.length>0)processFile(e.dataTransfer.files[0]);}
+function handleFileSelect(e){if(e.target.files.length>0)processFile(e.target.files[0]);}
+function processFile(f){DB.selectedFile=f;const t=getFileType(f.name);document.getElementById('selectedFile').style.display='block';document.getElementById('fileIcon').className=`announcement-icon ${t}`;document.getElementById('fileIcon').innerHTML=getFileIcon(t);document.getElementById('fileName').textContent=f.name;document.getElementById('fileSize').textContent=formatFileSize(f.size);}
+function clearSelectedFile(){DB.selectedFile=null;document.getElementById('selectedFile').style.display='none';document.getElementById('fileInput').value='';}
+
+function uploadAnnouncement() {
+    const title=document.getElementById('announcementTitle').value.trim();if(!title){alert('أدخل عنوان الإعلان');return;}if(!DB.selectedFile){alert('اختر ملفاً');return;}
+    const reader=new FileReader();reader.onload=function(e){DB.announcements.push({id:Date.now(),title,fileName:DB.selectedFile.name,fileSize:DB.selectedFile.size,fileType:getFileType(DB.selectedFile.name),fileData:e.target.result,date:new Date().toLocaleDateString('ar-SA')});
+    renderAnnouncements();closeModal('uploadModal');document.getElementById('announcementTitle').value='';clearSelectedFile();alert('✅ تم رفع الإعلان!');};reader.readAsDataURL(DB.selectedFile);
+}
+
+function renderAnnouncements() {
+    const c=document.getElementById('announcementsList');
+    c.innerHTML=DB.announcements.length?DB.announcements.map(a=>`<div class="announcement-item"><div class="announcement-icon ${a.fileType}">${getFileIcon(a.fileType)}</div>
+        <div class="announcement-info"><h4>${a.title}</h4><p>${a.fileName} • ${formatFileSize(a.fileSize)} • ${a.date}</p></div>
+        <div class="announcement-actions"><button class="view-btn" onclick="viewAnnouncement(${a.id})"><i class="fas fa-eye"></i></button>
+        <button class="download-btn" onclick="downloadAnnouncement(${a.id})"><i class="fas fa-download"></i></button>
+        <button class="delete-btn" onclick="deleteAnnouncement(${a.id})"><i class="fas fa-trash"></i></button></div></div>`).join(''):'<div class="empty-announcements"><i class="fas fa-folder-open"></i><p>لا توجد إعلانات</p></div>';
+}
+
+function viewAnnouncement(id){const a=DB.announcements.find(x=>x.id===id);if(a)window.open(a.fileData);}
+function downloadAnnouncement(id){const a=DB.announcements.find(x=>x.id===id);if(a){const l=document.createElement('a');l.href=a.fileData;l.download=a.fileName;l.click();}}
+function deleteAnnouncement(id){if(confirm('حذف؟')){DB.announcements=DB.announcements.filter(a=>a.id!==id);renderAnnouncements();}}
+
+function showTopResults(gender,comp) {
+    document.getElementById('topResultsTitle').innerHTML=`<i class="fas fa-${gender}"></i> نتائج ${gender==='male'?'الذكور':'الإناث'} - ${comp==='tilawa'?'التلاوة':'الحفظ'}`;
+    const lvs=comp==='hifz'?HIFZ_LVS:TILAWA_LVS;let html='',hasRes=false;
+    Object.keys(lvs).forEach(lv=>{const sts=DB.students.filter(s=>s.comp===comp&&s.gender===gender&&s.level===lv&&s.evals.length>0).map(s=>({...s,avg:s.evals.reduce((a,e)=>a+e.score,0)/s.evals.length})).sort((a,b)=>b.avg-a.avg).slice(0,3);
+        if(sts.length){hasRes=true;html+=`<div style="margin-bottom:25px"><h4 style="color:${comp==='tilawa'?'var(--pr)':'var(--suc)'};margin-bottom:15px;padding:10px;background:var(--g1);border-radius:8px"><i class="fas fa-medal"></i> ${lvs[lv].name}</h4>
+        <table><thead><tr><th>المستوى</th><th>الترتيب</th><th>الاسم</th><th>الصف</th><th>المدرسة</th></tr></thead><tbody>`;
+        sts.forEach((s,i)=>html+=`<tr class="${['winner-gold','winner-silver','winner-bronze'][i]||''}"><td>${lvs[lv].name}</td><td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td><td>${s.school}</td></tr>`);
+        html+=`</tbody></table></div>`;}});
+    document.getElementById('topResultsContent').innerHTML=hasRes?html:'<div class="empty"><i class="fas fa-inbox"></i><p>لا توجد نتائج</p></div>';openModal('topResultsModal');
+}
+
+// ========== التسجيل الصوتي ==========
+function resetRec(){DB.rec={active:false,paused:false,timer:null,time:0,chunks:[],recorder:null,url:null,stream:null};}
+
+async function startRecording() {
+    try { if(DB.rec.paused&&DB.rec.recorder){DB.rec.recorder.resume();DB.rec.paused=false;DB.rec.active=true;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}
+    else{DB.rec.stream=await navigator.mediaDevices.getUserMedia({audio:true});DB.rec.recorder=new MediaRecorder(DB.rec.stream);DB.rec.chunks=[];DB.rec.recorder.ondataavailable=e=>DB.rec.chunks.push(e.data);
+    DB.rec.recorder.start();DB.rec.active=true;DB.rec.paused=false;DB.rec.time=0;updateRecUI();DB.rec.timer=setInterval(updateTimer,1000);}}catch(e){alert('الميكروفون غير متاح');}
+}
+
+function pauseRecording(){if(DB.rec.recorder&&DB.rec.active){DB.rec.recorder.pause();DB.rec.paused=true;DB.rec.active=false;clearInterval(DB.rec.timer);updateRecUI();}}
+
+function stopRecording() {
+    if(DB.rec.recorder){DB.rec.recorder.stop();DB.rec.active=false;DB.rec.paused=false;clearInterval(DB.rec.timer);if(DB.rec.stream)DB.rec.stream.getTracks().forEach(t=>t.stop());
+    DB.rec.recorder.onstop=()=>{const b=new Blob(DB.rec.chunks,{type:'audio/webm'});DB.rec.url=URL.createObjectURL(b);updateRecUI();document.getElementById('recAudio').innerHTML=`<audio controls src="${DB.rec.url}" style="width:100%"></audio>`;document.getElementById('recAudio').style.display='block';};}
+}
+
+function saveRecording(){if(DB.rec.url&&DB.curStudent){DB.curStudent.rec=DB.rec.url;alert('✅ تم حفظ التسجيل!');updateRecUI();}}
+function updateTimer(){DB.rec.time++;document.getElementById('recTimer').textContent=`${Math.floor(DB.rec.time/60).toString().padStart(2,'0')}:${(DB.rec.time%60).toString().padStart(2,'0')}`;}
+
+function updateRecUI() {
+    const rb=document.getElementById('recStartPause'),sb=document.getElementById('recStop'),sv=document.getElementById('recSave'),ind=document.getElementById('recInd'),st=document.getElementById('recStatus');
+    if(DB.rec.active){rb.innerHTML='<i class="fas fa-pause"></i>';rb.className='rec-btn pause';rb.onclick=pauseRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator recording';st.textContent='● جاري التسجيل...';st.style.color='var(--dan)';}
+    else if(DB.rec.paused){rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;sb.disabled=false;sv.disabled=true;ind.className='rec-indicator paused';st.textContent='⏸ إيقاف مؤقت';st.style.color='var(--war)';}
+    else if(DB.rec.url){rb.disabled=true;sb.disabled=true;sv.disabled=DB.curStudent?.rec?true:false;ind.className='rec-indicator';st.textContent=DB.curStudent?.rec?'✅ تم الحفظ':'⏹ انتهى';st.style.color=DB.curStudent?.rec?'var(--suc)':'var(--dk)';}
+    else{rb.innerHTML='<i class="fas fa-microphone"></i>';rb.className='rec-btn rec';rb.onclick=startRecording;rb.disabled=false;sb.disabled=true;sv.disabled=true;ind.className='rec-indicator';st.textContent='اضغط للتسجيل';st.style.color='var(--g6)';}
+}
+
+// ========== التقييم ==========
+function openEval(id) {
+    DB.curStudent=DB.students.find(s=>s.id===id);resetRec();const s=DB.curStudent,lvs=s.comp==='hifz'?HIFZ_LVS:TILAWA_LVS,nq=lvs[s.level]?.q||3;
+    let rows='';for(let i=1;i<=nq;i++){
+        rows+=s.comp==='hifz'?`<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="ist${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="err${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><input type="number" class="ev-inp" id="taj${i}" min="0" value="0" onchange="calcHfz(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`:
+        `<tr><td>س${i}</td><td><input type="number" class="ev-inp" id="lj${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="lk${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tr${i}" min="0" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="tf${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><input type="number" class="ev-inp" id="nd${i}" min="0" max="5" value="0" onchange="calcTil(${nq})"></td><td><textarea class="ev-note" id="note${i}" placeholder="ملاحظات"></textarea></td><td class="sc-c" id="sc${i}">100</td></tr>`;
+    }
+    const th=s.comp==='hifz'?`<tr><th rowspan="2">س</th><th colspan="2" class="hfz">الحفظ(75)</th><th rowspan="2">تجويد(25)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th class="hfz">استفتاح-2</th><th class="hfz">أخطاء-1</th></tr>`:
+        `<tr><th rowspan="2">س</th><th colspan="3">التلاوة(90)</th><th colspan="2" class="snd">الصوت(10)</th><th rowspan="2" class="note">ملاحظات</th><th rowspan="2">المجموع</th></tr><tr><th>جلي-3</th><th>خفي-2</th><th>تردد-1</th><th class="snd">تفاعل</th><th class="snd">نداوة</th></tr>`;
+    const rec=DB.user.isLead?`<div class="eval-rec"><h4 style="text-align:center;color:var(--dan);margin-bottom:15px"><i class="fas fa-microphone"></i> تسجيل المتسابق</h4>
+        <div class="rec-ctrl"><button class="rec-btn rec" id="recStartPause" onclick="startRecording()"><i class="fas fa-microphone"></i></button><button class="rec-btn stp" id="recStop" onclick="stopRecording()" disabled><i class="fas fa-stop"></i></button><button class="rec-btn sav" id="recSave" onclick="saveRecording()" disabled><i class="fas fa-save"></i></button></div>
+        <div style="text-align:center"><span id="recInd" class="rec-indicator"></span><span id="recTimer" class="rec-timer">00:00</span></div><div id="recStatus" class="rec-status">اضغط للتسجيل</div><div id="recAudio" style="display:none;margin-top:15px"></div></div>`:'';
+    document.getElementById('evalBox').innerHTML=`<div class="eval-header ${s.comp}"><h3>${s.comp==='hifz'?'تقييم الحفظ':'تقييم التلاوة'}</h3><p>${lvs[s.level]?.name}</p></div>${rec}
+        <div class="eval-info"><div><label>الاسم</label><span>${s.name}</span></div><div><label>الجنس</label><span>${s.gender==='male'?'ذكر':'أنثى'}</span></div><div><label>الصف</label><span>${s.grade}</span></div><div><label>المدرسة</label><span>${s.school}</span></div><div><label>الأجزاء</label><span>${s.parts}</span></div></div>
+        <div style="overflow-x:auto;padding:20px"><table class="eval-t"><thead>${th}</thead><tbody>${rows}</tbody></table></div>
+        <div class="eval-footer"><div class="avg-box"><h4>متوسط الدرجة</h4><span class="score" id="finalAvg">0</span></div><div class="notes-box"><h4><i class="fas fa-sticky-note"></i> الملاحظات العامة</h4><textarea id="generalNotes" placeholder="أدخل ملاحظاتك..."></textarea></div></div>
+        <div style="padding:20px;display:flex;justify-content:center;gap:15px;background:var(--g1);border-radius:0 0 15px 15px"><button class="btn btn-su" onclick="saveEval()"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-se" onclick="closeEval()">إلغاء</button></div>`;
+    openModal('evalModal');
+}
+
+function calcHfz(nq){let t=0;for(let i=1;i<=nq;i++){const sc=Math.max(0,75-((+document.getElementById(`ist${i}`).value||0)*2+(+document.getElementById(`err${i}`).value||0)))+Math.max(0,25-(+document.getElementById(`taj${i}`).value||0));document.getElementById(`sc${i}`).textContent=sc;t+=sc;}document.getElementById('finalAvg').textContent=(t/nq).toFixed(1);}
+function calcTil(nq){let t=0;for(let i=1;i<=nq;i++){const sc=Math.max(0,90-((+document.getElementById(`lj${i}`).value||0)*3+(+document.getElementById(`lk${i}`).value||0)*2+(+document.getElementById(`tr${i}`).value||0)))+Math.min(+document.getElementById(`tf${i}`).value||0,5)+Math.min(+document.getElementById(`nd${i}`).value||0,5);document.getElementById(`sc${i}`).textContent=sc;t+=sc;}document.getElementById('finalAvg').textContent=(t/nq).toFixed(1);}
+function saveEval(){DB.curStudent.evals.push({jid:DB.user.id,score:+document.getElementById('finalAvg').textContent,notes:document.getElementById('generalNotes').value});closeEval();loadPage('judging');alert('✅ تم الحفظ!');}
+function closeEval(){stopRecording();closeModal('evalModal');}
+</script>
+</body>
+</html>
